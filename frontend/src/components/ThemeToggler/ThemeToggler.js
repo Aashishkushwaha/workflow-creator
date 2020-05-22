@@ -1,21 +1,15 @@
 import React from "react";
 import ThemeContext from "../../context/ThemeContext";
-import ThemeTogglerStyles from "./ThemeTogglerStyles";
+import classes from './ThemeToggler.module.css';
 
 const ThemeToggler = (props) => {
   return (
     <ThemeContext.Consumer>
       {(ThemeContext) => {
-        console.log(ThemeContext);
         return (
-          <ThemeTogglerStyles>
+          <div>
             <div
-              className="themeToggler"
-              style={
-                ThemeContext.currentTheme === "dark"
-                  ? { background: "#fff", border: "1px solid black" }
-                  : null
-              }
+              className={classes.themeToggler}
               onClick={() => {
                 if (ThemeContext.currentTheme === "light") {
                   ThemeContext.changeTheme("dark");
@@ -27,12 +21,12 @@ const ThemeToggler = (props) => {
               <span
                 style={
                   ThemeContext.currentTheme === "dark"
-                    ? { right: "0rem", background: "#000" }
+                    ? { left: "53%", background: "#fff" }
                     : null
                 }
               ></span>
             </div>
-          </ThemeTogglerStyles>
+          </div>
         );
       }}
     </ThemeContext.Consumer>

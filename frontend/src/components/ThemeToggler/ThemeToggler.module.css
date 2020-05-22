@@ -1,0 +1,50 @@
+.themeToggler {
+  box-shadow: 0 0 1px 1px #414141;
+  position: absolute;
+  bottom: 3rem;
+  right: 2rem;
+  width: 3.2rem;
+  height: 1.4rem;
+  border-radius: 1rem;
+  background: #414141;
+  cursor: pointer;
+}
+
+.themeToggler:hover > span {
+  box-shadow: 0 0 2px 5px dodgerblue;
+}
+
+.themeToggler > span {
+  content: "";
+  position: absolute;
+  margin: 0 .2rem;
+  height: 80%;
+  width: 37%;
+  top: 50%;
+  left: 0rem;
+  transform: translateY(-50%);
+  border-radius: 50%;
+  background: #fff;
+  transition: all .4s;
+  z-index: 3;
+}
+
+.themeToggler::before {
+  content: "\1F31C";
+  position: absolute;
+  color: green;
+  top: -.1rem;
+  font-size: 1rem;
+  left: 0rem;
+  z-index: 2;
+}
+
+.themeToggler::after {
+  content: "\1F31E";
+  position: absolute;
+  color: green;
+  top: -.1rem;
+  font-size: 1rem;
+  right: 0rem;
+  z-index: 2;
+}

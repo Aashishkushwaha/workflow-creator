@@ -7,24 +7,94 @@ nav {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: ${props => props.theme.bgColor}
+    background: ${(props) => props.theme.bgColor}
+  }
+
+  .hamberger__wrapper {
+    cursor: pointer;
+    height: 1.7rem;
+    width: 2.5rem;
+    position: absolute;
+    left: 1rem;
+  }
+
+  .hamberger {
+    display: none;
   }
 
   h3 {
-    font-size: 1.4rem;
-    color: ${props => props.theme.color}
+    font-size: 1.8rem;
+    color: ${(props) => props.theme.color};
+    text-shadow: 2px 2px 5px #03A9F4;
   }
 
   li {
     display: inline-block;
     font-size: 1.2rem;
     list-style: none;
-    padding: 0 1rem;
+    padding: 0rem 1rem;
   }
 
   a {
+    display: inline-block;
+    height: 100%;
+    padding: .3rem;
     text-decoration: none;
-    color: ${props => props.theme.color};
+    color: ${(props) => props.theme.color};
+  }
+  
+  @media screen and (max-width: 768px) {
+    nav {
+      flex-direction: column;
+      text-align: center;
+    }
+
+    ul {
+      display: none;
+    }
+
+    li {
+      display: block;
+    }
+
+    li:not(:last-child)
+    {
+      padding-bottom: .3rem;
+      border-bottom: 2px solid ${(props) => props.theme.color};
+    }
+
+    .hamberger {
+      display: block;
+      height: .35rem;
+      width: 2rem;
+      background: white;
+      border-radius: 4rem;
+      position: absolute;
+      left: 0rem;
+      top: .69rem;
+      cursor: inherit;
+      
+      &::before,
+      &::after {
+        content: "";
+        position: absolute;
+        background: inherit;
+        top: -.5rem;
+        left: 0rem;
+        height: 100%;
+        border-radius: inherit;
+        cursor: inherit;
+      }
+  
+      &::before {
+        width: 75%;
+      }
+  
+      &::after {
+        width: 125%;
+        top: .5rem;
+      }
+    }
   }
 `;
 
