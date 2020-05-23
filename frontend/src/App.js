@@ -52,9 +52,14 @@ function App() {
                   {modalContent}
                 </Modal>
               )}
-              {showSideDrawer && (
+              
+              <SideDrawer
+                value={showSideDrawer}
+                onBackDropClick={setShowSideDrawer}
+              />
+              {/* {showSideDrawer && (
                 <SideDrawer value={showSideDrawer} onBackDropClick={setShowSideDrawer} />
-              )}
+              )} */}
 
               <NavBar />
 

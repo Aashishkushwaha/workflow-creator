@@ -39,6 +39,12 @@ const FormStyles = styled.form`
     margin: 0.3rem 0;
     font: inherit;
   }
+
+  @media screen and (max-width: 768px) {
+    h2 {
+      font-size: 1.4rem;
+    }
+  }
 `;
 
 

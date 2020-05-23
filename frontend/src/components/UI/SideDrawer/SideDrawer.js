@@ -1,24 +1,33 @@
-import React from "react";
+import React, { useContext } from "react";
 import { NavLink } from "react-router-dom";
-import SideDrawerStyles from "./SideDrawerStyles";
 import Backdrop from "../Backdrop/Backdrop";
+import SideDrawerStyles from "./SideDrawerStyles";
+import SideDrawerContext from "../../../context/SideDrawerContext";
 
-const SideDrawer = ({value, onBackDropClick}) => {
+const SideDrawer = ({ value, onBackDropClick }) => {
+  const assignedClass = ["sideDrawer"]
+  const SideDrawerContextValue = useContext(SideDrawerContext);
+  if(SideDrawerContextValue.showSideDrawer)
+    assignedClass.push("showSideDrawer");
+
   return (
-    <Backdrop value={value} onBackDropClick={onBackDropClick}>
+    <>
+      <Backdrop value={value} onBackDropClick={onBackDropClick} />
       <SideDrawerStyles>
-        <nav>
-          <ul>
-            <li>
-              <NavLink to="/login">Login</NavLink>
-            </li>
-            <li>
-              <NavLink to="register">Register</NavLink>
-            </li>
-          </ul>
-        </nav>
+        <div className={assignedClass.join(" ")}>
+          <nav>
+            <ul>
+              <li>
+                <NavLink to="/login">Login</NavLink>
+              </li>
+              <li>
+                <NavLink to="register">Register</NavLink>
+              </li>
+            </ul>
+          </nav>
+        </div>
       </SideDrawerStyles>
-    </Backdrop>
+    </>
   );
 };
 

@@ -12,14 +12,15 @@ const Modal = (props) => {
   };
 
   return (
-    <Backdrop value={props.value} onBackDropClick={props.onBackDropClick}>
+    <>
+      <Backdrop value={props.value} onBackDropClick={props.onBackDropClick} />
       <ModalStyles>
         <h3>{props.children}</h3>
         <span className={"modalClose"} onClick={modalCloseHandler}>
           &times;
         </span>
       </ModalStyles>
-    </Backdrop>
+    </>
   );
 };
 
