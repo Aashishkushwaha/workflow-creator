@@ -16,6 +16,7 @@ nav {
     width: 2.5rem;
     position: absolute;
     left: 1rem;
+    visibility: hidden;
   }
 
   .hamberger {
@@ -61,6 +62,10 @@ nav {
     {
       padding-bottom: .3rem;
       border-bottom: 2px solid ${(props) => props.theme.color};
+    }
+
+    .hamberger__wrapper {
+      visibility: visible;
     }
 
     .hamberger {

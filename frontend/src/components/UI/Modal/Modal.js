@@ -3,7 +3,7 @@ import ModalContext from "../../../context/ModalContext";
 import Backdrop from "../Backdrop/Backdrop";
 import ModalStyles from "./ModalStyles";
 
-const Modal = (props) => {
+const Modal = ({ value, onBackDropClick, children }) => {
   const ModalContextValue = useContext(ModalContext);
 
   const modalCloseHandler = () => {
@@ -11,14 +11,20 @@ const Modal = (props) => {
     ModalContextValue.setShowModal(false);
   };
 
+  const assignedClasses = ["modal"];
+  if(ModalContextValue.showModal)
+    assignedClasses.push("showModal");
+
   return (
     <>
-      <Backdrop value={props.value} onBackDropClick={props.onBackDropClick} />
+      <Backdrop value={value} onBackDropClick={onBackDropClick} />
       <ModalStyles>
-        <h3>{props.children}</h3>
-        <span className={"modalClose"} onClick={modalCloseHandler}>
-          &times;
-        </span>
+        <div className={assignedClasses.join(" ")}>
+          <h3>{children}</h3>
+          <span className={"modalClose"} onClick={modalCloseHandler}>
+            &times;
+          </span>
+        </div>
       </ModalStyles>
     </>
   );

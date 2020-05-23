@@ -14,3 +14,36 @@ code {
     monospace;
 }
 
+.operations__container {
+  padding: .8rem 1.4rem;
+  /* width: 95vw; */
+  margin: 0 auto;
+  border-bottom: 1.5px solid #000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.controllers {
+  display: flex;
+  width: 50%;
+}
+
+.operations__container > .controllers > * {
+  margin: 0 .2rem;
+}
+
+@media only screen and (max-width: 768px) {
+  .operations__container {
+    flex-direction: column;
+  }
+
+  .controllers {
+    flex-direction: column;
+    
+  }
+
+  .operations__container > .controllers > * {
+    margin: .2rem;
+  }
+}

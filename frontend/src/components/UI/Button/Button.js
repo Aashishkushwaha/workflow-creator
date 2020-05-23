@@ -1,12 +1,12 @@
 import styled from "styled-components";
 
 const Button = styled.button`
-  display: block;
+  display: inline-block;
   border-radius: 4px;
   font-weight: 700;
   font-size: 1rem;
   border: none;
-  padding: 0.8rem 0;
+  padding: 0.8rem 1.2rem;
   margin: 0.5rem auto;
   width: 100%;
   cursor: pointer;

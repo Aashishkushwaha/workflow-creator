@@ -1,10 +1,41 @@
-import React from "react";
+import React, { useContext } from "react";
 import Form from "../UI/Form/Form";
+import ModalContext from "../../context/ModalContext";
+import AuthContext from "../../context/AuthContext";
 
 const LoginPage = (props) => {
-  const onSubmitHandler = (formData) => {
-    console.log(formData);
-  }
+  let ModalContextValue = useContext(ModalContext);
+  let AuthContextValue = useContext(AuthContext);
+
+  const onSubmitHandler = async (formData) => {
+    try {
+      let response = await fetch("http://localhost:4500/api/users/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      let res = await response.json();
+      console.log(res);
+      if (res.message) {
+        const data = { token: res.token, userId: res.userId };
+        AuthContextValue.login(data);
+        console.log(props);
+        props.history.push("/workflow");
+        ModalContextValue.setModalContent("You have logged in successfully. 😊");
+        ModalContextValue.setShowModal(true);
+      } else {
+        ModalContextValue.setModalContent(res.error);
+        ModalContextValue.setShowModal(true);
+      }
+    } catch (error) {
+      console.log(error);
+      ModalContextValue.setModalContent("Internal Error Occurred 😩");
+      ModalContextValue.setShowModal(true);
+    }
+  };
 
   return (
     <Form
