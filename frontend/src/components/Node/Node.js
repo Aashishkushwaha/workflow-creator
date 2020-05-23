@@ -6,8 +6,16 @@ const Node = (props) => {
     <div>
       <div className="operations__container">
         <div>
-          <h3>Search</h3>
-          <h3>Filter</h3>
+          <input
+            style={{
+              padding: ".5rem",
+              width: "100%",
+              border: "none",
+              borderBottom: "1px solid black",
+              borderRadius: "3px",
+              fontSize: "1.2rem"
+            }}
+          />
         </div>
         <div className="controllers">
           <Button
@@ -22,7 +30,7 @@ const Node = (props) => {
             Delete
           </Button>
           <Button bgColor="#398935" solid color="white" border="2px solid red">
-           + Create
+            + Create
           </Button>
           <Button bgColor="blue" solid color="white" border="2px solid red">
             Save

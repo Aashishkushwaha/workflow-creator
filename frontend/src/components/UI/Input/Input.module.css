@@ -12,5 +12,5 @@
 
 .Input:focus {
   outline: none;
-  box-shadow: 0 0px 1rem 1px #000;
+  box-shadow: 0 2px 2px 0px #585454;
 }

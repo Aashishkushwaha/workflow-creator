@@ -24,9 +24,20 @@ code {
   align-items: center;
 }
 
+.operations__container > div:first-child {
+  display: flex;
+  justify-content: space-evenly;
+  width: 50%;
+}
+
+.operations__container > div > * {
+  margin: .2rem;
+}
+
 .controllers {
   display: flex;
-  width: 50%;
+  justify-content: flex-end;
+  width: 40%;
 }
 
 .operations__container > .controllers > * {
@@ -40,8 +51,13 @@ code {
 
   .controllers {
     flex-direction: column;
-    
+    width: 75%;
   }
+
+  .operations__container > div:first-child {
+    width: 75%;
+    flex-direction: column;
+  }  
 
   .operations__container > .controllers > * {
     margin: .2rem;
