@@ -11,7 +11,6 @@ module.exports = async (req, res, next) => {
     }
 
     let token = authorization.split(" ")[1];
-    console.log({token});
 
     if (!token || token === "") {
       req.isAuth = false;

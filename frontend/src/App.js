@@ -41,12 +41,12 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [showSideDrawer, setShowSideDrawer] = useState(false);
   const [modalContent, setModalContent] = useState("");
-  const [token, setToken] = useState("fasdf");
+  const [token, setToken] = useState("");
   const [userId, setUserId] = useState(null);
 
-  const login = ({ userId, token }) => {
-    setToken(token);
-    setUserId(userId);
+  const login = (data) => {
+    setUserId(data.userId);
+    setToken(data.token);
   };
 
   const logout = () => {

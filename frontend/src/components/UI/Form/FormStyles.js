@@ -40,6 +40,22 @@ const FormStyles = styled.form`
     font: inherit;
   }
 
+  .passwordGroup {
+    position: relative; //👁
+  }
+
+  .passwordGroup > input {
+    padding-right: 2rem;
+  }
+
+  .password__viewer {
+    position: absolute;
+    top: 2.05rem;
+    right: .3rem;
+    font-size: 1rem;
+    cursor: pointer;
+  }
+
   @media screen and (max-width: 768px) {
     h2 {
       font-size: 1.4rem;

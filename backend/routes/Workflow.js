@@ -1,28 +1,45 @@
 const Router = require("express").Router();
 const Workflow = require("../models/Workflow");
+const User = require("../models/User");
 const isAuthorized = require("../middleware/Auth");
-const keys = require("../config/keys");
 
 /**
  * @path /api/workflow/create
  * @access Public
  * @method POST
  */
+
+Router.post("/read", isAuthorized, async (req, res) => {
+  let userId = req.body.user;
+  let workflows = await Workflow.find({creator: userId});
+
+  if(workflows) {
+    return res.status(200).json({
+      message: "workflows",
+      workflows
+    });
+  }
+
+})
+
+/**
+ * @path /api/workflow/create
+ * @access Public
+ * @method POST
+ */
+
 Router.post("/create", isAuthorized, async (req, res) => {
   try {
-    const { userId, isAuth } = req;
+    const { user: userId } = req.body;
     
-    if(! isAuth)
-      return res.status(403).send("Not authorized");
-  
     let newWorkflow = new Workflow({
-      name: "new Workflow",
+      name: "New workflow",
       creator: userId
     });
 
     let createdWorkflow = await newWorkflow.save();
 
-    return res.status(401).json({
+    return res.status(201).json({
       message: "Workflow created successfully",
       workflow: createdWorkflow
     });
@@ -30,11 +47,5 @@ Router.post("/create", isAuthorized, async (req, res) => {
     console.log(error);
   }
 });
-
-/**
- * @path /api/users/login
- * @access Public
- * @method POST
- */
 
 module.exports = Router;

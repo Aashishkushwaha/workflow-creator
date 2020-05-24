@@ -18,11 +18,11 @@ const LoginPage = (props) => {
       });
 
       let res = await response.json();
-      console.log(res);
+      
       if (res.message) {
         const data = { token: res.token, userId: res.userId };
         AuthContextValue.login(data);
-        console.log(props);
+        
         props.history.push("/workflow");
         ModalContextValue.setModalContent("You have logged in successfully. 😊");
         ModalContextValue.setShowModal(true);

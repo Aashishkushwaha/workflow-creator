@@ -1,25 +1,26 @@
 import React from "react";
 import NodeItemStyles from "./NodeItemStyles";
+import check from '../../../assets/images/check.svg';
 
 class NodeItem extends React.Component {
   state = {
-    workflowStatus: "pending",
-    workflowStatusColor: "#ccc",
+    nodeStatus: "pending",
+    nodeStatusColor: "#ccc",
   };
 
   nodeItemStatusChangeHandler = (e) => {
     const newWorkflowState = { ...this.state };
-    newWorkflowState.workflowStatus =
-      newWorkflowState.workflowStatus === "pending"
+    newWorkflowState.nodeStatus =
+      newWorkflowState.nodeStatus === "pending"
         ? "inProgress"
-        : newWorkflowState.workflowStatus === "inProgress"
+        : newWorkflowState.nodeStatus === "inProgress"
         ? "completed"
         : "pending";
 
-    newWorkflowState.workflowStatusColor =
-      newWorkflowState.workflowStatus === "pending"
+    newWorkflowState.nodeStatusColor =
+      newWorkflowState.nodeStatus === "pending"
         ? "#ccc"
-        : newWorkflowState.workflowStatus === "inProgress"
+        : newWorkflowState.nodeStatus === "inProgress"
         ? "dodgerblue"
         : "#189c11";
 
@@ -28,15 +29,18 @@ class NodeItem extends React.Component {
 
   render() {
     return (
-      <NodeItemStyles statusColor={this.state.workflowStatusColor}>
+      <NodeItemStyles statusColor={this.state.nodeStatusColor}>
         <span
-          className="actions__button"
+          className="actions__button--right"
           onClick={this.nodeItemStatusChangeHandler}
-        />
-        <span className="input">Workflow</span>
+        >
+          <img src={check} style={{
+            height: "1.8rem"
+          }} alt="check"/>
+        </span>
+        <input className="input" />
         <div>
-          <span>status</span>
-          <span>logo</span>
+          <textarea className="text__container"/>
         </div>
       </NodeItemStyles>
     );

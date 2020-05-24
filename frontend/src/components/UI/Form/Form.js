@@ -9,6 +9,7 @@ const Form = ({ label, redirect, redirectLabel, onSubmitHandler }) => {
   const [password, setPassword] = useState("");
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
+  const [passwordFieldType, setPasswordFieldType] = useState("password");
 
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
@@ -57,16 +58,20 @@ const Form = ({ label, redirect, redirectLabel, onSubmitHandler }) => {
         />
         <span className="error">{emailError}</span>
       </div>
-      <div className="formGroup">
+      <div className="formGroup passwordGroup">
         <label>Password</label>
         <Input
           ref={passwordRef}
           placeholder="********"
           name="password"
-          type="password"
+          type={passwordFieldType}
           value={password}
           onChange={onChangeHandler}
         />
+        <span className="password__viewer"
+          onMouseDown={() => setPasswordFieldType("text")}
+          onMouseUp={() => setPasswordFieldType("password")}
+        >👁</span>
         <span className="error">{passwordError}</span>
       </div>
       <div className="formGroup">

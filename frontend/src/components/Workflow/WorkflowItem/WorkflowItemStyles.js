@@ -7,7 +7,7 @@ const WorkflowItemStyles = styled.div`
   flex-direction: column;
   align-items: center;
   font-size: 1.2rem;
-  margin: .8rem .2rem;
+  margin: 0.8rem 0.6rem;
   position: relative;
 
   .actions__button--right,

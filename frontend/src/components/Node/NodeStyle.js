@@ -45,4 +45,12 @@ export default styled.div`
   .operations__container > .controllers > * {
     margin: 0 0.2rem;
   }
+
+  .node__container {
+    display: grid;
+    margin: 1rem;
+    grid-template-columns: repeat( auto-fill, minmax(18rem, 1fr) );
+    justify-content: center;
+    align-items: center;
+  }
 `;
