@@ -7,7 +7,7 @@ const SideDrawerStyles = styled.div`
     max-width: 90vw;
     background: ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.color};
-    position: absolute;
+    position: fixed;
     z-index: 25;
     box-shadow: 1px 0 12px 0px #fff;
     width: 0;

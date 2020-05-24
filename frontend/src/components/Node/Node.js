@@ -1,19 +1,16 @@
 import React from "react";
 import Button from "../UI/Button/Button";
+import NodeStyle from "./NodeStyle";
 
 const Node = (props) => {
+  console.log(props);
   return (
-    <div>
+    <NodeStyle>
       <div className="operations__container">
         <div>
           <input
             style={{
-              padding: ".5rem",
-              width: "100%",
-              border: "none",
-              borderBottom: "1px solid black",
-              borderRadius: "3px",
-              fontSize: "1.2rem"
+              
             }}
           />
         </div>
@@ -37,7 +34,7 @@ const Node = (props) => {
           </Button>
         </div>
       </div>
-    </div>
+    </NodeStyle>
   );
 };
 

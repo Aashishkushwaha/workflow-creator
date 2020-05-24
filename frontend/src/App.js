@@ -8,9 +8,9 @@ import {
 import RegisterPage from "./components/RegisterPage/RegisterPage";
 import ThemeToggler from "./components/ThemeToggler/ThemeToggler";
 import LoginPage from "./components/LoginPage/LoginPage";
-import Workflow from './components/Workflow/Workflow';
+import Workflow from "./components/Workflow/Workflow";
 import NavBar from "./components/NavBar.js/NavBar";
-import Node from './components/Node/Node';
+import Node from "./components/Node/Node";
 import { ThemeProvider } from "styled-components";
 import ThemeContext from "./context/ThemeContext";
 import AuthContext from "./context/AuthContext";
@@ -21,10 +21,12 @@ import SideDrawer from "./components/UI/SideDrawer/SideDrawer";
 import GlobalStyles from "./GlobalStyles";
 
 const light = {
-  bgColor: "#5CDB95",
+  // bgColor: "#5CDB95",
+  bgColor: "#34d496",
   color: "#000",
   border: "1px",
-  borderColor: "#5CDB95",
+  // borderColor: "#5CDB95",
+  borderColor: "#34d496",
 };
 
 const dark = {
@@ -79,17 +81,18 @@ function App() {
                 />
 
                 <NavBar />
-
                 <Switch>
                   {token && <Redirect from="/" to="/workflow" exact />}
                   {token && <Redirect from="/login" to="/workflow" exact />}
                   {token && <Redirect from="/register" to="/workflow" exact />}
-                  {token && <Route path="/workflow" component={Workflow} exact />}
-                  {token && <Route path="/workflow/:id" component={Node} exact />}
-                  {!token && <Redirect from="/workflow" to="/login" exact />}
-                  {!token && (
-                    <Route path="/login" component={LoginPage} />
+                  {token && (
+                    <Route path="/workflow" component={Workflow} exact />
                   )}
+                  {token && (
+                    <Route path="/workflow/:id" component={Node} exact />
+                  )}
+                  {!token && <Redirect from="/workflow" to="/login" exact />}
+                  {!token && <Route path="/login" component={LoginPage} />}
                   {!token && (
                     <Route path="/register" render={() => <RegisterPage />} />
                   )}

@@ -9,7 +9,7 @@ const SearchBar = (props) => {
       <input
         type="text"
         value={searchText}
-        placeholder="Search text ..."
+        placeholder="Search ..."
         onChange={(e) => setSearchText(e.target.value)}
       />
     </SerachBarStyles>

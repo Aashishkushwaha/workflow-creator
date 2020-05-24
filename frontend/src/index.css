@@ -7,59 +7,11 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  /* background: repeating-radial-gradient(#6b1, transparent 500px); */
+  z-index: -1;
 }
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
-}
-
-.operations__container {
-  padding: .8rem 1.4rem;
-  /* width: 95vw; */
-  margin: 0 auto;
-  border-bottom: 1.5px solid #000;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.operations__container > div:first-child {
-  display: flex;
-  justify-content: space-evenly;
-  width: 50%;
-}
-
-.operations__container > div > * {
-  margin: .2rem;
-}
-
-.controllers {
-  display: flex;
-  justify-content: flex-end;
-  width: 40%;
-}
-
-.operations__container > .controllers > * {
-  margin: 0 .2rem;
-}
-
-@media only screen and (max-width: 768px) {
-  .operations__container {
-    flex-direction: column;
-  }
-
-  .controllers {
-    flex-direction: column;
-    width: 75%;
-  }
-
-  .operations__container > div:first-child {
-    width: 75%;
-    flex-direction: column;
-  }  
-
-  .operations__container > .controllers > * {
-    margin: .2rem;
-  }
 }

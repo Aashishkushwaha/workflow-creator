@@ -22,6 +22,7 @@ const FilterStyles = styled.div`
     max-height: 0rem;
     overflow: hidden;
     transition: all .4s;
+    z-index: 2;
   }
 
   ul > li {

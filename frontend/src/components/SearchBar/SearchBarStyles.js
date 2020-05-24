@@ -5,6 +5,7 @@ const SerachBarStyles = styled.div`
     padding: 0.3rem 0.5rem;
     width: 100%;
     border: none;
+    font: inherit;
     font-size: 1.2rem;
     border-bottom: 1px solid ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.bgColor};

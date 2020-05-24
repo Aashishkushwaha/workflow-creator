@@ -1,6 +1,6 @@
 .themeToggler {
   box-shadow: 0 0 1px 1px #414141;
-  position: absolute;
+  position: fixed;
   bottom: 3rem;
   right: 2rem;
   width: 3.2rem;
@@ -8,6 +8,7 @@
   border-radius: 1rem;
   background: #414141;
   cursor: pointer;
+  z-index: 4;
 }
 
 .themeToggler:hover > span {

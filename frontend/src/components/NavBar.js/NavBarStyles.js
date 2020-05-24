@@ -1,13 +1,19 @@
 import styled from "styled-components";
 
 const NavBarStyles = styled.header`
-
-nav {
-    padding: .8rem 1.6rem;
+  
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 4;
+  
+  nav {
+    padding: 0.8rem 1.6rem;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: ${(props) => props.theme.bgColor}
+    background: ${(props) => props.theme.bgColor};
   }
 
   .hamberger__wrapper {
@@ -26,7 +32,7 @@ nav {
   h3 {
     font-size: 1.8rem;
     color: ${(props) => props.theme.color};
-    text-shadow: 2px 2px 5px #03A9F4;
+    text-shadow: 2px 2px 5px #03a9f4;
   }
 
   li {
@@ -39,11 +45,11 @@ nav {
   a {
     display: inline-block;
     height: 100%;
-    padding: .3rem;
+    padding: 0.3rem;
     text-decoration: none;
     color: ${(props) => props.theme.color};
   }
-  
+
   @media screen and (max-width: 768px) {
     nav {
       flex-direction: column;
@@ -58,9 +64,8 @@ nav {
       display: block;
     }
 
-    li:not(:last-child)
-    {
-      padding-bottom: .3rem;
+    li:not(:last-child) {
+      padding-bottom: 0.3rem;
       border-bottom: 2px solid ${(props) => props.theme.color};
     }
 
@@ -70,34 +75,34 @@ nav {
 
     .hamberger {
       display: block;
-      height: .35rem;
+      height: 0.35rem;
       width: 2rem;
       background: white;
       border-radius: 4rem;
       position: absolute;
       left: 0rem;
-      top: .69rem;
+      top: 0.69rem;
       cursor: inherit;
-      
+
       &::before,
       &::after {
         content: "";
         position: absolute;
         background: inherit;
-        top: -.5rem;
+        top: -0.5rem;
         left: 0rem;
         height: 100%;
         border-radius: inherit;
         cursor: inherit;
       }
-  
+
       &::before {
         width: 75%;
       }
-  
+
       &::after {
         width: 125%;
-        top: .5rem;
+        top: 0.5rem;
       }
     }
   }

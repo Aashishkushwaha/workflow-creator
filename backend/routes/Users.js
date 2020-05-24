@@ -51,7 +51,7 @@ Router.post("/login", async (req, res) => {
 
     if (email.trim().length === 0 || password.trim().length === 0) {
       return res.status(401).json({
-        error: "Please provide all details. 😊"
+        error: "Please provide all details! 😮"
       })
     }
 
