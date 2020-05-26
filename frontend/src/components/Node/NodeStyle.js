@@ -14,7 +14,7 @@ export default styled.div`
   .operations__container > div:first-child {
     display: flex;
     justify-content: space-evenly;
-    width: 50%;
+    width: 35%;
   }
 
   .operations__container > div > * {
@@ -48,9 +48,30 @@ export default styled.div`
 
   .node__container {
     display: grid;
-    margin: 1rem;
+    margin: 1rem 1rem 1rem 3.5rem;
     grid-template-columns: repeat( auto-fill, minmax(18rem, 1fr) );
     justify-content: center;
     align-items: center;
+    gap: 3rem;
+  
+    & > div:first-child > .node__connector {
+      display: none;  
+    }
+  }
+
+  @media only screen and (max-width: 768px) {
+    .controllers {
+      flex-direction: column;
+
+      & > * {
+        margin: .1rem 0 !important;
+      }
+    }
+  }
+
+  @media only screen and (max-width: 710px) {
+    .node__container {
+      margin: 1rem 2.25rem 1rem 2.25rem;
+    }
   }
 `;

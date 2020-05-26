@@ -1,6 +1,7 @@
 import React from "react";
 import NodeItemStyles from "./NodeItemStyles";
 import check from "../../../assets/images/check.svg";
+import next from "../../../assets/images/next.svg";
 
 class NodeItem extends React.Component {
   state = {
@@ -40,6 +41,15 @@ class NodeItem extends React.Component {
   render() {
     return (
       <NodeItemStyles statusColor={this.state.nodeStatusColor}>
+        <span className="node__connector">
+          <img
+            src={next}
+            style={{
+              height: "1.8rem",
+            }}
+            alt="check"
+          />
+        </span>
         <span
           className="actions__button--right"
           onClick={this.nodeItemStatusChangeHandler}

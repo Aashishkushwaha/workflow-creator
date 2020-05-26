@@ -12,18 +12,21 @@ const Modal = ({ value, onBackDropClick, children }) => {
   };
 
   const assignedClasses = ["modal"];
-  if(ModalContextValue.showModal)
-    assignedClasses.push("showModal");
+  if (ModalContextValue.showModal) assignedClasses.push("showModal");
 
   return (
     <>
       <Backdrop value={value} onBackDropClick={onBackDropClick} />
       <ModalStyles>
         <div className={assignedClasses.join(" ")}>
-          <h3>{children}</h3>
-          <span className={"modalClose"} onClick={modalCloseHandler}>
-            &times;
-          </span>
+          {value && (
+            <>
+              <h3>{children}</h3>
+              <span className={"modalClose"} onClick={modalCloseHandler}>
+                &times;
+              </span>
+            </>
+          )}
         </div>
       </ModalStyles>
     </>

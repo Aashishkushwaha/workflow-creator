@@ -17,6 +17,7 @@ import AuthContext from "./context/AuthContext";
 import ModalContext from "./context/ModalContext";
 import SideDrawerContext from "./context/SideDrawerContext";
 import Modal from "./components/UI/Modal/Modal";
+import ConfirmModal from "./components/UI/Modal/ConfirmModal/ConfirmModal";
 import SideDrawer from "./components/UI/SideDrawer/SideDrawer";
 import GlobalStyles from "./GlobalStyles";
 
@@ -42,9 +43,11 @@ const dark = {
 
 function App() {
   const [currentTheme, setCurrentTheme] = useState("light");
-  const [showModal, setShowModal] = useState(false);
   const [showSideDrawer, setShowSideDrawer] = useState(false);
+  const [showModal, setShowModal] = useState(false);
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
+  const [confirmModalContent, setConfirmModalContent] = useState("");
   const [token, setToken] = useState(localStorage.getItem("auth-token") || "");
   const [userId, setUserId] = useState(null);
 
@@ -56,14 +59,23 @@ function App() {
   const logout = () => {
     setToken(null);
     setUserId(null);
-    localStorage.removeItem("auth-token")
+    localStorage.removeItem("auth-token");
   };
 
   return (
     <Router>
       <AuthContext.Provider value={{ userId, token, login, logout }}>
         <ModalContext.Provider
-          value={{ showModal, modalContent, setShowModal, setModalContent }}
+          value={{
+            showModal,
+            modalContent,
+            showConfirmModal,
+            confirmModalContent,
+            setConfirmModalContent,
+            setShowConfirmModal,
+            setShowModal,
+            setModalContent,
+          }}
         >
           <SideDrawerContext.Provider
             value={{ showSideDrawer, setShowSideDrawer }}
@@ -79,6 +91,10 @@ function App() {
                 <Modal value={showModal} onBackDropClick={setShowModal}>
                   {modalContent}
                 </Modal>
+                
+                <ConfirmModal value={showConfirmModal} onBackDropClick={setShowConfirmModal}>
+                  {confirmModalContent}
+                </ConfirmModal>
 
                 <SideDrawer
                   value={showSideDrawer}

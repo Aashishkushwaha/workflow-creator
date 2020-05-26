@@ -16,15 +16,16 @@ const Node = (props) => {
   );
   const [nodeItems, setNodeItems] = useState([]);
   const { token } = useContext(AuthContext);
-  const { setShowModal, setModalContent } = useContext(ModalContext);
+  const { setShowModal, setModalContent, setConfirmModalContent, setShowConfirmModal } = useContext(ModalContext);
 
   const fetchNodeItems = async () => {
     let result = await fetch(
-      `http://localhost:4500/api/node/read/${props.match.params.id}`, {
+      `http://localhost:4500/api/node/read/${props.match.params.id}`,
+      {
         method: "GET",
         headers: {
-          Authorization: `Bearer ${token}`
-        }
+          Authorization: `Bearer ${token}`,
+        },
       }
     );
 
@@ -60,6 +61,11 @@ const Node = (props) => {
     setShowModal(true);
   };
 
+  const onCancelHandler = (e) => {
+    setConfirmModalContent("Do you really want to cancel ?");
+    setShowConfirmModal(true);
+  };
+
   return (
     <NodeStyle>
       <div className="operations__container">
@@ -85,7 +91,13 @@ const Node = (props) => {
               Shuffle
             </div>
           </Button>
-          <Button bgColor="tomato" solid color="white" border="2px solid red">
+          <Button
+            bgColor="tomato"
+            solid
+            color="white"
+            border="2px solid red"
+            onClick={onCancelHandler}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
                 src={trash}
@@ -108,7 +120,7 @@ const Node = (props) => {
                 style={{ height: "1rem", margin: ".2rem" }}
                 alt="create"
               />
-              Add Node
+              Create
             </div>
           </Button>
           <Button bgColor="blue" solid color="white" border="2px solid red">

@@ -30,22 +30,21 @@
   z-index: 3;
 }
 
+.themeToggler::before,
+.themeToggler::after {
+  position: absolute;
+  top: 52%;
+  font-size: 1rem;
+  z-index: 2;
+  transform: translateY(-50%);
+}
+
 .themeToggler::before {
   content: "\1F31C";
-  position: absolute;
-  color: green;
-  top: -.1rem;
-  font-size: 1rem;
   left: 0rem;
-  z-index: 2;
 }
 
 .themeToggler::after {
   content: "\1F31E";
-  position: absolute;
-  color: green;
-  top: -.1rem;
-  font-size: 1rem;
   right: 0rem;
-  z-index: 2;
 }

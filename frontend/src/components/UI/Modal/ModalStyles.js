@@ -2,19 +2,7 @@ import styled from "styled-components";
 
 const ModalStyles = styled.div`
   .modal {
-    // transition: all 0.4s;
-    // position: absolute;
-    // max-width: 90vw;
-    // padding: 1.2rem 2rem;
-    // top: -50%;
-    // left: 50%;
-    // transform: translate(-50%, -50%);
-    // border-radius: 0.4rem;
-    // background: #fff;
-    // color: #414141;
-    // z-index: 10;
-    // font-size: 1rem;
-
+    
     background: #fff;
     z-index: 12;
     padding: 1.2rem 2rem;
@@ -55,6 +43,13 @@ const ModalStyles = styled.div`
     color: red;
     transform: scale(1.1);
     cursor: pointer;
+  }
+
+  .action-buttons__container {
+    display: flex;
+    padding: 2rem 1rem 1rem;
+    justify-content: space-between;
+    align-items: center;
   }
 
   @keyframes bounce {

@@ -83,4 +83,33 @@ export default styled.div`
     outline: none;
     box-shadow: 0 3px 2px 0 rgba(0, 0, 0, 0.2);
   }
+
+  .node__connector {
+    position: absolute;
+    content: "";
+    top: 50%;
+    left: -3.4rem;
+    height: 2.5rem;
+    width: 2.5rem;
+    border-radius: 50%;
+    background: ${props => props.theme.bgColor};
+    box-shadow: 0 0 2px 3px dodgerblue;
+    transition: all 0.3s;
+    z-index: 2;
+    font-size: 3rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  @media only screen and (max-width: 710px) {
+    .node__connector {
+      top: -3.65rem;
+      left: 50%;
+      transform: translateX(-50%) rotate(90deg);
+    }
+  }
+
 `;
