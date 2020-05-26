@@ -1,13 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 
 const withLink = (WrappedComponent) => {
   class NewComponent extends React.Component {
     render() {
       return (
-        <Link to={`/workflow/${this.props.to}`}>
+        <NavLink to={{
+          pathname: `/workflow/${this.props.to}`,
+          state: {
+            workflowItemTitle: this.props.workflowItemTitle
+          }
+        }}>
           <WrappedComponent />
-        </Link>
+        </NavLink>
       );
     }
   }

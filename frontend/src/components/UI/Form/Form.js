@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import { NavLink } from "react-router-dom";
 import Button from "../Button/Button";
 import Input from "../Input/Input";
 import FormStyles from "./FormStyles";
+import ThemeContext from "../../../context/ThemeContext";
 
 const Form = ({ label, redirect, redirectLabel, onSubmitHandler }) => {
   const [email, setEmail] = useState("");
@@ -10,6 +11,7 @@ const Form = ({ label, redirect, redirectLabel, onSubmitHandler }) => {
   const [emailError, setEmailError] = useState("");
   const [passwordError, setPasswordError] = useState("");
   const [passwordFieldType, setPasswordFieldType] = useState("password");
+  const { currentTheme } = useContext(ThemeContext);
 
   const emailRef = React.createRef();
   const passwordRef = React.createRef();
@@ -68,14 +70,23 @@ const Form = ({ label, redirect, redirectLabel, onSubmitHandler }) => {
           value={password}
           onChange={onChangeHandler}
         />
-        <span className="password__viewer"
+        <span
+          className="password__viewer"
           onMouseDown={() => setPasswordFieldType("text")}
           onMouseUp={() => setPasswordFieldType("password")}
-        >👁</span>
+        >
+          👁
+        </span>
         <span className="error">{passwordError}</span>
       </div>
       <div className="formGroup">
-        <Button bgColor="dodgerblue" solid color="white" border="2px solid red">
+        <Button
+          bgColor={currentTheme === "light" ? "#f30857" : "dodgerblue"}
+          style={{ width: "100%" }}
+          solid
+          color="white"
+          border="2px solid red"
+        >
           {label}
         </Button>
       </div>

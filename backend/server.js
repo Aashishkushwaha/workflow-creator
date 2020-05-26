@@ -6,6 +6,7 @@ const PORT = process.env.PORT || 4500;
 app.use(express.json());
 app.use("/api/users/", require("./routes/Users"));
 app.use("/api/workflow/", require("./routes/Workflow"));
+app.use("/api/node/", require("./routes/Node"));
 
 const db = mongoose.connection;
 

@@ -10,26 +10,35 @@ const Workflow = (props) => {
   const [workflowItems, setWorkflowItems] = useState([]);
   const AuthContextValue = useContext(AuthContext);
 
+  const fetchWorkflows = async () => {
+    let res = await fetch(`http://localhost:4500/api/workflow/read`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${AuthContextValue.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: AuthContextValue.userId }),
+    });
+
+    let result = await res.json();
+
+    if (result.message) {
+      setWorkflowItems(result.workflows);
+    }
+  };
+
   useEffect(() => {
-    const fetchWorkflows = async () => {
-      let res = await fetch(`http://localhost:4500/api/workflow/read`, {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${AuthContextValue.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user: AuthContextValue.userId }),
-      });
-
-      let result = await res.json();
-
-      if(result.message) {
-        setWorkflowItems(result.workflows);
-      }
-    };
-
     fetchWorkflows();
   }, []);
+
+  const updateWorkflowItemsAfterDelete = (id) => {
+    let newWorkflowItems = [...workflowItems];
+    newWorkflowItems = newWorkflowItems.filter(
+      (workflowItem) => id !== workflowItem._id
+    );
+
+    setWorkflowItems(newWorkflowItems);
+  };
 
   const workflowCreateHandler = async () => {
     let res = await fetch(`http://localhost:4500/api/workflow/create`, {
@@ -71,7 +80,13 @@ const Workflow = (props) => {
       </div>
       <div className="workflow__container">
         {workflowItems.map((workflow_item) => (
-          <WorkflowItem key={workflow_item._id} to={workflow_item._id} />
+          <WorkflowItem
+            key={workflow_item._id}
+            id={workflow_item._id}
+            workflowItemTitle = {workflow_item.name}
+            workflowItemStatus = {workflow_item.workflow_status}
+            updateWorkflowItemsAfterDelete={updateWorkflowItemsAfterDelete}
+          />
         ))}
         {/* <WorkflowItem to="11" />
         <WorkflowItem to="12" />

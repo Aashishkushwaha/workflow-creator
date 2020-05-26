@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Button from "../UI/Button/Button";
 import NodeStyle from "./NodeStyle";
 import NodeItem from "./NodeItem/NodeItem";
@@ -6,14 +6,68 @@ import shuffle from "../../assets/images/shuffle.svg";
 import trash from "../../assets/images/trash.svg";
 import save from "../../assets/images/save.svg";
 import create from "../../assets/images/create.svg";
+import { withRouter } from "react-router-dom";
+import AuthContext from "../../context/AuthContext";
+import ModalContext from "../../context/ModalContext";
 
 const Node = (props) => {
-  console.log(props);
+  const [workflowItemTitle, setWorkflowItemTitle] = useState(
+    props.location.state.workflowItemTitle
+  );
+  const [nodeItems, setNodeItems] = useState([]);
+  const { token } = useContext(AuthContext);
+  const { setShowModal, setModalContent } = useContext(ModalContext);
+
+  const fetchNodeItems = async () => {
+    let result = await fetch(
+      `http://localhost:4500/api/node/read/${props.match.params.id}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`
+        }
+      }
+    );
+
+    const resData = await result.json();
+
+    setNodeItems(resData.data);
+  };
+
+  useEffect(() => {
+    fetchNodeItems();
+  }, []);
+
+  const onNodeCreateHandler = async () => {
+    let requestBody = {
+      workflowId: props.match.params.id,
+    };
+
+    let result = await fetch("http://localhost:4500/api/node/create", {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(requestBody),
+    });
+
+    let resData = await result.json();
+    let newNodeItems = [...nodeItems];
+    newNodeItems.push(resData.data);
+    setNodeItems(newNodeItems);
+
+    setModalContent(resData.message);
+    setShowModal(true);
+  };
+
   return (
     <NodeStyle>
       <div className="operations__container">
         <div>
-          <input style={{}} />
+          <input
+            value={workflowItemTitle}
+            onChange={(e) => setWorkflowItemTitle(e.target.value)}
+          />
         </div>
         <div className="controllers">
           <Button
@@ -41,7 +95,13 @@ const Node = (props) => {
               Delete
             </div>
           </Button>
-          <Button bgColor="#398935" solid color="white" border="2px solid red">
+          <Button
+            bgColor="#398935"
+            solid
+            color="white"
+            border="2px solid red"
+            onClick={onNodeCreateHandler}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
                 src={create}
@@ -64,13 +124,22 @@ const Node = (props) => {
         </div>
       </div>
       <div className="node__container">
+        {nodeItems.map((nodeItem) => (
+          <NodeItem
+            key={nodeItem._id}
+            nodeTitle={nodeItem.title}
+            nodeText={nodeItem.text}
+            nodeStatus={nodeItem.node_status}
+            workflowId={nodeItem.workflowId}
+          />
+        ))}
+        {/* <NodeItem />
         <NodeItem />
         <NodeItem />
-        <NodeItem />
-        <NodeItem />
+        <NodeItem /> */}
       </div>
     </NodeStyle>
   );
 };
 
-export default Node;
+export default withRouter(Node);

@@ -21,12 +21,16 @@ import SideDrawer from "./components/UI/SideDrawer/SideDrawer";
 import GlobalStyles from "./GlobalStyles";
 
 const light = {
+  // bgColor: "#ed9e55",
   // bgColor: "#5CDB95",
-  bgColor: "#34d496",
+  // bgColor: "#34d496",
+  bgColor: "#08c6b4",
   color: "#000",
   border: "1px",
+  // borderColor: "#ed9e55",
   // borderColor: "#5CDB95",
-  borderColor: "#34d496",
+  // borderColor: "#34d496",
+  borderColor: "#08c6b4",
 };
 
 const dark = {
@@ -41,7 +45,7 @@ function App() {
   const [showModal, setShowModal] = useState(false);
   const [showSideDrawer, setShowSideDrawer] = useState(false);
   const [modalContent, setModalContent] = useState("");
-  const [token, setToken] = useState("");
+  const [token, setToken] = useState(localStorage.getItem("auth-token") || "");
   const [userId, setUserId] = useState(null);
 
   const login = (data) => {
@@ -52,6 +56,7 @@ function App() {
   const logout = () => {
     setToken(null);
     setUserId(null);
+    localStorage.removeItem("auth-token")
   };
 
   return (

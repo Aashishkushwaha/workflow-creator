@@ -22,7 +22,7 @@ const LoginPage = (props) => {
       if (res.message) {
         const data = { token: res.token, userId: res.userId };
         AuthContextValue.login(data);
-        
+        localStorage.setItem("auth-token", res.token);
         props.history.push("/workflow");
         ModalContextValue.setModalContent("You have logged in successfully. 😊");
         ModalContextValue.setShowModal(true);

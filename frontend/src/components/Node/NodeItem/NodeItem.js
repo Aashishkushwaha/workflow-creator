@@ -1,11 +1,18 @@
 import React from "react";
 import NodeItemStyles from "./NodeItemStyles";
-import check from '../../../assets/images/check.svg';
+import check from "../../../assets/images/check.svg";
 
 class NodeItem extends React.Component {
   state = {
-    nodeStatus: "pending",
-    nodeStatusColor: "#ccc",
+    nodeStatus: this.props.nodeStatus,
+    nodeText: this.props.nodeText,
+    nodeTitle: this.props.nodeTitle,
+    nodeStatusColor:
+      this.props.nodeStatus === "pending"
+        ? "#ccc"
+        : this.props.nodeStatus === "inProgress"
+        ? "dodgerblue"
+        : "#189c11",
   };
 
   nodeItemStatusChangeHandler = (e) => {
@@ -24,7 +31,10 @@ class NodeItem extends React.Component {
         ? "dodgerblue"
         : "#189c11";
 
-    this.setState(newWorkflowState);
+    this.setState({
+      nodeStatus: newWorkflowState.nodeStatus,
+      nodeStatusColor: newWorkflowState.nodeStatusColor,
+    });
   };
 
   render() {
@@ -33,14 +43,31 @@ class NodeItem extends React.Component {
         <span
           className="actions__button--right"
           onClick={this.nodeItemStatusChangeHandler}
+          title={this.state.nodeStatus}
         >
-          <img src={check} style={{
-            height: "1.8rem"
-          }} alt="check"/>
+          <img
+            src={check}
+            style={{
+              height: "1.8rem",
+            }}
+            alt="check"
+          />
         </span>
-        <input className="input" />
+        <input
+          className="input"
+          value={this.state.nodeTitle}
+          onChange={(e) => {
+            this.setState({ nodeTitle: e.target.value });
+          }}
+        />
         <div>
-          <textarea className="text__container"/>
+          <textarea
+            className="text__container"
+            value={this.state.nodeText}
+            onChange={(e) => {
+              this.setState({ nodeText: e.target.value });
+            }}
+          />
         </div>
       </NodeItemStyles>
     );
