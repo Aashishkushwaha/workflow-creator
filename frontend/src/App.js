@@ -48,6 +48,7 @@ function App() {
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [confirmModalContent, setConfirmModalContent] = useState("");
+  const [onConfirmHandler, setOnConfirmHandler] = useState(null);
   const [token, setToken] = useState(localStorage.getItem("auth-token") || "");
   const [userId, setUserId] = useState(null);
 
@@ -71,10 +72,12 @@ function App() {
             modalContent,
             showConfirmModal,
             confirmModalContent,
+            onConfirmHandler,
             setConfirmModalContent,
             setShowConfirmModal,
             setShowModal,
             setModalContent,
+            setOnConfirmHandler,
           }}
         >
           <SideDrawerContext.Provider
@@ -91,8 +94,12 @@ function App() {
                 <Modal value={showModal} onBackDropClick={setShowModal}>
                   {modalContent}
                 </Modal>
-                
-                <ConfirmModal value={showConfirmModal} onBackDropClick={setShowConfirmModal}>
+
+                <ConfirmModal
+                  value={showConfirmModal}
+                  onBackDropClick={setShowConfirmModal}
+                  onConfirmClickHandler={onConfirmHandler}
+                >
                   {confirmModalContent}
                 </ConfirmModal>
 

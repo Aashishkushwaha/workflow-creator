@@ -4,12 +4,19 @@ import Backdrop from "../../Backdrop/Backdrop";
 import ConfirmModalStyles from "../ModalStyles";
 import Button from "../../Button/Button";
 
-const Modal = ({ value, onBackDropClick, children }) => {
+const Modal = ({ value, onBackDropClick, children, onConfirmClickHandler }) => {
   const ModalContextValue = useContext(ModalContext);
 
   const modalCloseHandler = () => {
     ModalContextValue.setConfirmModalContent("");
     ModalContextValue.setShowConfirmModal(false);
+  };
+
+  const onConfirmHandler = (e) => {
+    onConfirmClickHandler();
+    ModalContextValue.setShowConfirmModal(false);
+    ModalContextValue.setConfirmModalContent("");
+    ModalContextValue.setOnConfirmHandler(null);
   };
 
   const assignedClasses = ["modal"];
@@ -33,6 +40,7 @@ const Modal = ({ value, onBackDropClick, children }) => {
                   solid
                   color="white"
                   border="2px solid red"
+                  onClick={onConfirmHandler}
                 >
                   Confirm
                 </Button>
@@ -42,6 +50,7 @@ const Modal = ({ value, onBackDropClick, children }) => {
                   solid
                   color="white"
                   border="2px solid red"
+                  onClick={modalCloseHandler}
                 >
                   Cancel
                 </Button>

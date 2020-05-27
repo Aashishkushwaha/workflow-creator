@@ -52,6 +52,17 @@ const ModalStyles = styled.div`
     align-items: center;
   }
 
+  @media only screen and (max-width: 768px) {
+    .action-buttons__container {
+      flex-direction: column;
+      
+      & > * {
+        width: 100%;
+        margin: .2rem 0 !important;
+      }
+    }
+  }
+
   @keyframes bounce {
     0% {
       top: -50%;

@@ -6,11 +6,10 @@ const Filter = props => {
     <FilterStyles>
       <div >
         Filter
-
         <ul>
-          <li>completed</li>
-          <li>in progress</li>
-          <li>pending</li>
+          <li>Completed</li>
+          <li>In Progress</li>
+          <li>Pending</li>
         </ul>
       </div>
     </FilterStyles>

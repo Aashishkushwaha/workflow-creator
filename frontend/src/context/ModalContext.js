@@ -9,6 +9,6 @@ export default React.createContext({
   setModalContent: () => {},
   setShowConfirmModal: () => {},
   setConfirmModalContent: () => {},
-  onConfirmHandler: () => {},
-  onCancelHandler: () => {}
+  setOnConfirmHandler: () => {},
+  setOnCancelHandler: () => {}
 });

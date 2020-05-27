@@ -16,7 +16,13 @@ const Node = (props) => {
   );
   const [nodeItems, setNodeItems] = useState([]);
   const { token } = useContext(AuthContext);
-  const { setShowModal, setModalContent, setConfirmModalContent, setShowConfirmModal } = useContext(ModalContext);
+  const {
+    setShowModal,
+    setModalContent,
+    setConfirmModalContent,
+    setShowConfirmModal,
+    setOnConfirmHandler,
+  } = useContext(ModalContext);
 
   const fetchNodeItems = async () => {
     let result = await fetch(
@@ -61,9 +67,49 @@ const Node = (props) => {
     setShowModal(true);
   };
 
-  const onCancelHandler = (e) => {
-    setConfirmModalContent("Do you really want to cancel ?");
+  const onDeleteConfirmHandler = (e) => {
+    try {
+      setConfirmModalContent("Do you really want to delete note ?");
+      setShowConfirmModal(true);
+      setOnConfirmHandler(() => async () => {
+        // console.log("You selected to delete.");
+        let requestBody = { nodeId: nodeItems[nodeItems.length - 1]._id };
+
+        let result = await fetch("http://localhost:4500/api/node/delete", {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        let resData = await result.json();
+
+        setNodeItems(nodeItems.slice(0, nodeItems.length - 1));
+        setModalContent(resData.message);
+        setShowModal(true);
+      });
+    } catch (error) {
+      setModalContent("Something bad happened. 😮");
+      setShowModal(true);
+    }
+  };
+
+  const onShuffleConfirmHandler = (e) => {
+    setConfirmModalContent("Do you really want to shuffle notes ?");
     setShowConfirmModal(true);
+    setOnConfirmHandler(() => () => {
+      console.log("You selected to shuffle.");
+    });
+  };
+
+  const onSaveConfirmHandler = (e) => {
+    setConfirmModalContent("Do you really want to save the changes ?");
+    setShowConfirmModal(true);
+    setOnConfirmHandler(() => () => {
+      console.log("You selected to save.");
+    });
   };
 
   return (
@@ -81,6 +127,7 @@ const Node = (props) => {
             solid
             color="white"
             border="2px solid red"
+            onClick={onShuffleConfirmHandler}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
@@ -96,7 +143,7 @@ const Node = (props) => {
             solid
             color="white"
             border="2px solid red"
-            onClick={onCancelHandler}
+            onClick={onDeleteConfirmHandler}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
@@ -123,7 +170,13 @@ const Node = (props) => {
               Create
             </div>
           </Button>
-          <Button bgColor="blue" solid color="white" border="2px solid red">
+          <Button
+            bgColor="blue"
+            solid
+            color="white"
+            border="2px solid red"
+            onClick={onSaveConfirmHandler}
+          >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
                 src={save}
@@ -145,10 +198,6 @@ const Node = (props) => {
             workflowId={nodeItem.workflowId}
           />
         ))}
-        {/* <NodeItem />
-        <NodeItem />
-        <NodeItem />
-        <NodeItem /> */}
       </div>
     </NodeStyle>
   );

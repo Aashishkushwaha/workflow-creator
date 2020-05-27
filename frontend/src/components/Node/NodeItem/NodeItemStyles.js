@@ -101,7 +101,6 @@ export default styled.div`
     justify-content: center;
     align-items: center;
     color: #fff;
-    cursor: pointer;
   }
 
   @media only screen and (max-width: 710px) {
