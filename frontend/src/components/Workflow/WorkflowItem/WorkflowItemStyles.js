@@ -51,7 +51,10 @@ const WorkflowItemStyles = styled.div`
     padding: .3rem;
     width: 100%;
     font: inherit;
-    border: 1px solid ${({theme}) => theme.bgColor}
+    border: 1px solid ${({theme}) => theme.bgColor};
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
   }
 
   & > div {
@@ -61,6 +64,10 @@ const WorkflowItemStyles = styled.div`
     padding: 0rem;
     justify-content: space-between;
     align-items: center;
+  
+    & > span:first-child {
+      text-transform: uppercase;
+    }
   }
 
   & > div > span:last-child {
@@ -68,6 +75,7 @@ const WorkflowItemStyles = styled.div`
     width: 2.5rem;
     border-radius: 50%;
     background: ${props => props.statusColor};
+    box-shadow: 0 0 2px 2px ${props => props.theme.bgColor};
   }
 `
 

@@ -24,11 +24,10 @@ export default styled.div`
   .operations__container > div > input {
     padding: 0.5rem;
     width: 100%;
-    border: none;
     border-radius: 3px;
     font-size: 1.2rem;
     color: ${(props) => props.theme.bgColor};
-    border-bottom: 1px solid ${(props) => props.theme.bgColor};
+    border: 1px solid ${(props) => props.theme.bgColor};
   }
 
   .operations__container > div > input:focus {
@@ -60,11 +59,20 @@ export default styled.div`
   }
 
   @media only screen and (max-width: 768px) {
+    .operations__container > div:first-child {
+      width: 50%;
+    }
+    
     .controllers {
       flex-direction: column;
 
       & > * {
         margin: .1rem 0 !important;
+        align-self: center;
+        width: 100%;
+        & > * {
+          justify-content: center;
+        }
       }
     }
   }

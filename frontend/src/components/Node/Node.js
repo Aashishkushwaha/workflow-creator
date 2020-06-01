@@ -15,6 +15,7 @@ const Node = (props) => {
     props.location.state.workflowItemTitle
   );
   const [nodeItems, setNodeItems] = useState([]);
+  const [canShuffle, setCanShuffle] = useState(true);
   const { token } = useContext(AuthContext);
   const {
     setShowModal,
@@ -72,7 +73,6 @@ const Node = (props) => {
       setConfirmModalContent("Do you really want to delete note ?");
       setShowConfirmModal(true);
       setOnConfirmHandler(() => async () => {
-        // console.log("You selected to delete.");
         let requestBody = { nodeId: nodeItems[nodeItems.length - 1]._id };
 
         let result = await fetch("http://localhost:4500/api/node/delete", {
@@ -100,16 +100,64 @@ const Node = (props) => {
     setConfirmModalContent("Do you really want to shuffle notes ?");
     setShowConfirmModal(true);
     setOnConfirmHandler(() => () => {
-      console.log("You selected to shuffle.");
+      // console.log("You selected to shuffle.");
     });
   };
 
   const onSaveConfirmHandler = (e) => {
     setConfirmModalContent("Do you really want to save the changes ?");
     setShowConfirmModal(true);
-    setOnConfirmHandler(() => () => {
-      console.log("You selected to save.");
+    setOnConfirmHandler(() => async () => {
+
+      let workflowStatus = "completed";
+      
+      nodeItems.map(nodeItem => {
+        if(nodeItem.node_status !== "completed"){
+          workflowStatus = "pending";
+          return null;
+        }
+        return null;
+      })
+      let requestBody = {
+        workflowId: nodeItems[0].workflowId,
+        workflowItemTitle,
+        nodeItems,
+        workflowStatus
+      };
+
+      let result = await fetch("http://localhost:4500/api/node/update", {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
+
+      let resData = await result.json();
+
+      setModalContent(resData.message);
+      setShowModal(true);
     });
+  };
+
+  const nodeItemStatusChangeHandler = async (e, nodeIndex) => {
+    const updatedItems = [...nodeItems];
+    updatedItems[nodeIndex].node_status =
+      updatedItems[nodeIndex].node_status === "pending"
+        ? "inProgress"
+        : updatedItems[nodeIndex].node_status === "inProgress"
+        ? "completed"
+        : "pending";
+
+    setNodeItems(updatedItems);
+  };
+
+  const onNodeChangeHandler = (event, nodeIndex) => {
+    const { name, value } = event.target;
+    let updateNodeItems = [...nodeItems];
+    updateNodeItems[nodeIndex][name] = value;
+    setNodeItems(updateNodeItems);
   };
 
   return (
@@ -128,6 +176,10 @@ const Node = (props) => {
             color="white"
             border="2px solid red"
             onClick={onShuffleConfirmHandler}
+            style={{
+              background: canShuffle ? "grey" : "dodgreblue",
+            }}
+            disabled={canShuffle}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img
@@ -189,13 +241,14 @@ const Node = (props) => {
         </div>
       </div>
       <div className="node__container">
-        {nodeItems.map((nodeItem) => (
+        {nodeItems.map((nodeItem, index) => (
           <NodeItem
             key={nodeItem._id}
-            nodeTitle={nodeItem.title}
-            nodeText={nodeItem.text}
-            nodeStatus={nodeItem.node_status}
+            index={index}
+            node={nodeItem}
             workflowId={nodeItem.workflowId}
+            nodeItemStatusChangeHandler={nodeItemStatusChangeHandler}
+            onNodeChangeHandler={onNodeChangeHandler}
           />
         ))}
       </div>

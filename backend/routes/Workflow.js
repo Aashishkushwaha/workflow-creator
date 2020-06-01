@@ -1,5 +1,6 @@
 const Router = require("express").Router();
 const Workflow = require("../models/Workflow");
+const Node = require("../models/Node");
 const isAuthorized = require("../middleware/Auth");
 
 /**
@@ -58,6 +59,8 @@ Router.delete("/delete", isAuthorized, async (req, res) => {
     const { workflowId } = req.body;
     
     let result = await Workflow.deleteOne({_id: workflowId});
+
+    await Node.deleteMany({workflowId});
 
     if(res)
       return res.status(204).json({

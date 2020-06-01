@@ -48,9 +48,15 @@ export default styled.div`
   & > .input {
     padding: 0.3rem;
     width: 100%;
-    font: inherit;
+    font-size: 1rem;
     border: none;
     border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+    border-radius: .3rem;
+    padding: .7rem .4rem  .3rem .7rem;
+
+    &:invalid {
+      border-color: red;
+    }
   }
 
   & > div {
@@ -75,7 +81,7 @@ export default styled.div`
     height: 20rem;
     padding: 0.5rem;
     color: ${({ theme }) => theme.bgColor};
-    font-size: 1rem;
+    font-size: 1.4rem;
   }
 
   .text__container:focus,

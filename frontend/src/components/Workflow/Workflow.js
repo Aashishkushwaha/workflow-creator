@@ -5,10 +5,20 @@ import Button from "../UI/Button/Button";
 import WorkflowItem from "./WorkflowItem/WorkflowItem";
 import WorkflowStyles from "./WorkflowStyles";
 import AuthContext from "../../context/AuthContext";
+import ModalContext from "../../context/ModalContext";
 
 const Workflow = (props) => {
   const [workflowItems, setWorkflowItems] = useState([]);
+  // const [itemsToBeShown, setItemsToBeShown] = useState([]);
+  // const [filter, setFilter] = useState("all");
   const AuthContextValue = useContext(AuthContext);
+  const {
+    setShowModal,
+    setModalContent,
+    setConfirmModalContent,
+    setShowConfirmModal,
+    setOnConfirmHandler,
+  } = useContext(ModalContext);
 
   const fetchWorkflows = async () => {
     let res = await fetch(`http://localhost:4500/api/workflow/read`, {
@@ -31,13 +41,42 @@ const Workflow = (props) => {
     fetchWorkflows();
   }, []);
 
-  const updateWorkflowItemsAfterDelete = (id) => {
-    let newWorkflowItems = [...workflowItems];
-    newWorkflowItems = newWorkflowItems.filter(
-      (workflowItem) => id !== workflowItem._id
+  const workflowDeleteHandler = async (id) => {
+    let workflowItem = workflowItems.filter(
+      (workflowItem) => id === workflowItem._id
     );
 
-    setWorkflowItems(newWorkflowItems);
+    if (workflowItem[0].workflow_status !== "completed") {
+      setShowModal(true);
+      setModalContent("Only completed workflow can be deleted. 😮");
+    } else {
+      setConfirmModalContent("Do you really want to delete the workflow ?");
+      setShowConfirmModal(true);
+      setOnConfirmHandler(() => async () => {
+        const requestBody = {
+          workflowId: id,
+        };
+
+        await fetch("http://localhost:4500/api/workflow/delete", {
+          method: "Delete",
+          headers: {
+            Authorization: `Bearer ${AuthContextValue.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        let newWorkflowItems = [...workflowItems];
+        newWorkflowItems = newWorkflowItems.filter(
+          (workflowItem) => id !== workflowItem._id
+        );
+
+        setWorkflowItems(newWorkflowItems);
+
+        setShowModal(true);
+        setModalContent("Workflow deleted successfully. 😮");
+      });
+    }
   };
 
   const workflowCreateHandler = async () => {
@@ -59,12 +98,16 @@ const Workflow = (props) => {
     }
   };
 
+  const onFilterItemClickHandler = (event, filter) => {
+    alert(filter);
+  };
+
   return (
     <WorkflowStyles>
       <div className="operations__container">
         <div>
           <SearchBar />
-          <Filter />
+          <Filter onFilterItemClickHandler={onFilterItemClickHandler} />
         </div>
         <div className="controllers">
           <Button
@@ -83,26 +126,11 @@ const Workflow = (props) => {
           <WorkflowItem
             key={workflow_item._id}
             id={workflow_item._id}
-            workflowItemTitle = {workflow_item.name}
-            workflowItemStatus = {workflow_item.workflow_status}
-            updateWorkflowItemsAfterDelete={updateWorkflowItemsAfterDelete}
+            workflowItemTitle={workflow_item.name}
+            workflowItemStatus={workflow_item.workflow_status}
+            workflowItemDeleteHandler={workflowDeleteHandler}
           />
         ))}
-        {/* <WorkflowItem to="11" />
-        <WorkflowItem to="12" />
-        <WorkflowItem to="13" />
-        <WorkflowItem to="14" />
-        <WorkflowItem to="15" />
-        <WorkflowItem to="16" />
-        <WorkflowItem to="17" />
-        <WorkflowItem to="18" />
-        <WorkflowItem to="19" />
-        <WorkflowItem to="20" />
-        <WorkflowItem to="21" />
-        <WorkflowItem to="22" />
-        <WorkflowItem to="23" />
-        <WorkflowItem to="24" />
-        <WorkflowItem to="25" /> */}
       </div>
     </WorkflowStyles>
   );

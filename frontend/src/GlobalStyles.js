@@ -11,6 +11,12 @@ const GlobalStyles = createGlobalStyle`
     font-size: 62.5%;
     font-family: monospace, sans-serif;
   }
+
+  ::selection {
+    background: ${props => props.theme.bgColor};
+    // color: ${props => props.theme.color};
+    color: #fff;
+  }
 `
 
 export default GlobalStyles;

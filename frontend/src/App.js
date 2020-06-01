@@ -55,6 +55,7 @@ function App() {
   const login = (data) => {
     setUserId(data.userId);
     setToken(data.token);
+    localStorage.setItem("auth-token", data.token);
   };
 
   const logout = () => {

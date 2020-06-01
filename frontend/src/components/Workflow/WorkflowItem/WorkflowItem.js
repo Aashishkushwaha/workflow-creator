@@ -17,10 +17,7 @@ const EditWorkFlowItem = (props) => {
 const EditWorkFlowItemWithLink = withLink(EditWorkFlowItem);
 
 class WorkflowItem extends React.Component {
-  state = {
-    workflowItemStatus: "Pending",
-    workflowItemStatusColor: "#ccc",
-  };
+  state = {}
 
   static getDerivedStateFromProps(props, state) {
     return {
@@ -31,41 +28,13 @@ class WorkflowItem extends React.Component {
 
   static contextType = AuthContext;
 
-  workflowStatusChangeHandler = (e) => {
-    const newWorkflowItemState = { ...this.state };
-    newWorkflowItemState.workflowItemStatus =
-      newWorkflowItemState.workflowItemStatus === "Pending"
-        ? "Completed"
-        : "Pending";
-
-    newWorkflowItemState.workflowItemStatusColor =
-      newWorkflowItemState.workflowItemStatus === "Pending" ? "#ccc" : "green";
-
-    this.setState(newWorkflowItemState);
-  };
-
-  workflowDeleteHandler = async (id) => {
-    const requestBody = {
-      workflowId: id,
-    };
-
-    let res = await fetch("http://localhost:4500/api/workflow/delete", {
-      method: "Delete",
-      headers: {
-        Authorization: `Bearer ${this.context.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    });
-
-    console.log(res);
-
-    this.props.updateWorkflowItemsAfterDelete(id);
-  };
-
   render() {
     return (
-      <WorkflowItemStyles statusColor={this.state.workflowItemStatusColor}>
+      <WorkflowItemStyles
+        statusColor={
+          this.props.workflowItemStatus === "completed" ? "#189c11" : "#ccc"
+        }
+      >
         <EditWorkFlowItemWithLink
           to={this.props.id}
           className="actions__button--left"
@@ -74,14 +43,14 @@ class WorkflowItem extends React.Component {
         <span
           title="delete"
           className="actions__button--right"
-          onClick={() => this.workflowDeleteHandler(this.props.id)}
+          onClick={() => this.props.workflowItemDeleteHandler(this.props.id)}
         >
           <img style={{ height: "1rem" }} src={trash} alt="delete" />
         </span>
         <span className="input">{this.state.workflowItemTitle}</span>
         <div>
           <span>{this.state.workflowItemStatus}</span>
-          <span onClick={this.workflowStatusChangeHandler}></span>
+          <span></span>
         </div>
       </WorkflowItemStyles>
     );

@@ -2,12 +2,12 @@ import styled from "styled-components";
 
 const SerachBarStyles = styled.div`
   input {
-    padding: 0.3rem 0.5rem;
+    padding: 0.5rem;
+    border-radius: .3rem;
     width: 100%;
-    border: none;
     font: inherit;
     font-size: 1.2rem;
-    border-bottom: 1px solid ${(props) => props.theme.bgColor};
+    border: 1px solid ${(props) => props.theme.bgColor};
     color: ${(props) => props.theme.bgColor};
   }
 
