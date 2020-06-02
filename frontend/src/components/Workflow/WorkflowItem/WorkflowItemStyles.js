@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 const WorkflowItemStyles = styled.div`
   padding: 2rem 2rem .5rem;
-  border: 1.5px solid ${props => props.theme.bgColor};
+  border: 1.5px solid ${props => props.theme.color};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -19,7 +19,7 @@ const WorkflowItemStyles = styled.div`
     width: 2.5rem;
     border-radius: 50%;
     background: tomato;
-    box-shadow: 0 0 2px 1px ${props => props.theme.bgColor};
+    box-shadow: 0 0 2px 1px ${props => props.theme.color};
     opacity: 0;
     transition: all .3s;
     z-index: 2;
@@ -52,7 +52,8 @@ const WorkflowItemStyles = styled.div`
     width: 100%;
     font: inherit;
     border-radius: .3rem;
-    border: 1px solid ${({theme}) => theme.bgColor};
+    color: ${({theme}) => theme.color};
+    border: 1px solid ${({theme}) => theme.color};
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -68,6 +69,7 @@ const WorkflowItemStyles = styled.div`
   
     & > span:first-child {
       text-transform: uppercase;
+      color: ${({theme}) => theme.color};
     }
   }
 
@@ -76,7 +78,7 @@ const WorkflowItemStyles = styled.div`
     width: 2.5rem;
     border-radius: 50%;
     background: ${props => props.statusColor};
-    box-shadow: 0 0 2px 2px ${props => props.theme.bgColor};
+    box-shadow: 0 0 2px 2px ${props => props.theme.color};
   }
 `
 

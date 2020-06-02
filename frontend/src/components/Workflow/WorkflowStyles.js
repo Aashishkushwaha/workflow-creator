@@ -14,11 +14,13 @@ export default styled.div`
   .operations__container > div:first-child {
     display: flex;
     justify-content: space-evenly;
+    align-items: center;
     width: 50%;
   }
 
   .operations__container > div > * {
     margin: 0.2rem;
+    width: 50%;
   }
 
   .controllers {
@@ -33,7 +35,10 @@ export default styled.div`
 
   .workflow__container {
     display: grid;
-    margin: 1rem;
+    padding: 1rem .5rem;
+    overflow-y: auto;
+    overflow-x: hidden;
+    max-height: calc(100vh - 10.3rem);
     grid-template-columns: repeat( auto-fill, minmax(18rem, 1fr) );
     justify-content: center;
     align-items: center;
@@ -46,16 +51,27 @@ export default styled.div`
 
     .controllers {
       flex-direction: column;
-      width: 75%;
+      width: 76%;
+      padding-right: .4rem;
     }
 
     .operations__container > div:first-child {
       width: 75%;
       flex-direction: column;
+
+      & > * {
+        width: 100%;
+      }
     }
 
     .operations__container > .controllers > * {
       margin: 0.2rem;
+      width: 100%;
+    }
+
+    .workflow__container {
+      max-height: calc(100vh - 15rem);
     }
   }
+  
 `;

@@ -6,11 +6,15 @@ const FilterStyles = styled.div`
     text-align: center;
     width: 100%;
     padding: 0.5rem 3rem;
-    border: 1px solid ${(props) => props.theme.bgColor};
+    border: 1px solid ${(props) => props.theme.color};
     margin: 0.2rem 0;
     font-size: 1.2rem;
     border-radius: 0.2rem;
     position: relative;
+  }
+
+  .label {
+    color: ${(props) => props.theme.color};
   }
 
   .filter__indicator {
@@ -22,7 +26,7 @@ const FilterStyles = styled.div`
     border-radius: 50%;
     top: 50%;
     right: 1rem;
-    background: ${({ theme }) => theme.bgColor};
+    background: ${({ theme }) => theme.color};
     box-shadow: 0 0 5px 1px black;
     transform: translateY(-50%);
   }
@@ -44,8 +48,8 @@ const FilterStyles = styled.div`
     margin: 0.2rem 0;
     border-radius: 0.2rem;
     cursor: pointer;
-    background: ${(props) => props.theme.bgColor};
-    color: ${(props) => props.theme.color};
+    background: ${(props) => props.theme.color};
+    color: ${(props) => props.theme.bgColor};
     position: relative;
   }
 

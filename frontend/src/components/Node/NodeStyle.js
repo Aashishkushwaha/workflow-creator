@@ -26,8 +26,8 @@ export default styled.div`
     width: 100%;
     border-radius: 3px;
     font-size: 1.2rem;
-    color: ${(props) => props.theme.bgColor};
-    border: 1px solid ${(props) => props.theme.bgColor};
+    color: #414141;
+    border: 1px solid ${(props) => props.theme.color};
   }
 
   .operations__container > div > input:focus {

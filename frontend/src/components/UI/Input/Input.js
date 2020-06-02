@@ -1,12 +1,11 @@
 import React from "react";
-import classes from "./Input.module.css";
+import InputStyles from "./InputStyles";
 
 const Input = React.forwardRef(
   ({ name, type, placeholder, value, onChange }, ref) => (
-    <input
+    <InputStyles
       name={name}
       ref={ref}
-      className={classes.Input}
       type={type}
       placeholder={placeholder}
       value={value}

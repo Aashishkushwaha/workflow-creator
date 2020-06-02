@@ -5,7 +5,7 @@ const Filter = ({ onFilterItemClickHandler, currentFilter }) => {
   return (
     <FilterStyles>
       <div>
-        Filter
+        <span className="label">Filter</span>
         <span
           className={"filter__indicator"}
           style={{
@@ -17,17 +17,6 @@ const Filter = ({ onFilterItemClickHandler, currentFilter }) => {
           <li onClick={(event) => onFilterItemClickHandler(event, "all")}>
             All
           </li>
-          <li onClick={(event) => onFilterItemClickHandler(event, "completed")}>
-            Completed
-            <span
-              className={"filter__indicator"}
-              style={{
-                background: "#fff",
-                opacity: currentFilter === "completed" ? 1 : 0,
-                transition: "opacity .4s",
-              }}
-            />
-          </li>
           <li onClick={(event) => onFilterItemClickHandler(event, "pending")}>
             Pending
             <span
@@ -35,6 +24,17 @@ const Filter = ({ onFilterItemClickHandler, currentFilter }) => {
               style={{
                 background: "#fff",
                 opacity: currentFilter === "pending" ? 1 : 0,
+                transition: "opacity .4s",
+              }}
+            />
+          </li>
+          <li onClick={(event) => onFilterItemClickHandler(event, "completed")}>
+            Completed
+            <span
+              className={"filter__indicator"}
+              style={{
+                background: "#fff",
+                opacity: currentFilter === "completed" ? 1 : 0,
                 transition: "opacity .4s",
               }}
             />

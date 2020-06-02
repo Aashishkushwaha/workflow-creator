@@ -13,7 +13,7 @@ const NavBarStyles = styled.header`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background: ${(props) => props.theme.bgColor};
+    background: ${(props) => props.theme.navBgColor};
   }
 
   .hamberger__wrapper {
@@ -83,6 +83,7 @@ const NavBarStyles = styled.header`
       left: 0rem;
       top: 0.69rem;
       cursor: inherit;
+      background: ${(props) => props.theme.color};
 
       &::before,
       &::after {

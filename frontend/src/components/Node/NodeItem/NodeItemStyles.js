@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 export default styled.div`
   padding: 2rem 2rem 0.5rem;
-  border: 1.5px solid ${(props) => props.theme.bgColor};
+  border: 1.5px solid ${(props) => props.theme.color};
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -18,7 +18,7 @@ export default styled.div`
     width: 2.5rem;
     border-radius: 50%;
     background: ${props => props.statusColor};
-    box-shadow: 0 0 2px 1px ${(props) => props.theme.bgColor};
+    box-shadow: 0 0 2px 1px ${(props) => props.theme.color};
     opacity: 0;
     transition: all 0.3s;
     z-index: 2;
@@ -49,7 +49,7 @@ export default styled.div`
     padding: 0.3rem;
     width: 100%;
     font-size: 1rem;
-    border: 1px solid ${({ theme }) => theme.bgColor};
+    border: 1px solid ${({ theme }) => theme.color};
     border-radius: .3rem;
     padding: .7rem .4rem  .3rem .7rem;
 
@@ -79,7 +79,8 @@ export default styled.div`
     width: 100%;
     height: 20rem;
     padding: 0.5rem;
-    color: ${({ theme }) => theme.bgColor};
+    // color: ${({ theme }) => theme.bgColor};
+    color: #414141;
     font-size: 1.4rem;
   }
 
@@ -97,7 +98,7 @@ export default styled.div`
     height: 2.5rem;
     width: 2.5rem;
     border-radius: 50%;
-    background: ${props => props.theme.bgColor};
+    background: ${props => props.theme.color};
     box-shadow: 0 0 2px 3px dodgerblue;
     transition: all 0.3s;
     z-index: 2;

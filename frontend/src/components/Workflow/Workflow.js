@@ -13,7 +13,7 @@ const Workflow = (props) => {
   const [filter, setFilter] = useState(
     localStorage.getItem("workflow_filter") || "all"
   );
-  // const [itemsToBeShown, setItemsToBeShown] = useState([]);
+  const [searchTerm, setSearchTearm] = useState("");
   const AuthContextValue = useContext(AuthContext);
   const {
     setShowModal,
@@ -57,37 +57,40 @@ const Workflow = (props) => {
       (workflowItem) => id === workflowItem._id
     );
 
-    if (workflowItem[0].workflow_status !== "completed") {
-      setShowModal(true);
-      setModalContent("Only completed workflow can be deleted. 😮");
-    } else {
-      setConfirmModalContent("Do you really want to delete the workflow ?");
-      setShowConfirmModal(true);
-      setOnConfirmHandler(() => async () => {
-        const requestBody = {
-          workflowId: id,
-        };
+    setConfirmModalContent("Do you really want to delete the workflow ?");
+    setShowConfirmModal(true);
+    setOnConfirmHandler(() => async () => {
+      const requestBody = {
+        workflowId: id,
+      };
 
-        await fetch("http://localhost:4500/api/workflow/delete", {
-          method: "Delete",
-          headers: {
-            Authorization: `Bearer ${AuthContextValue.token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        });
-
-        let newWorkflowItems = [...workflowItems];
-        newWorkflowItems = newWorkflowItems.filter(
-          (workflowItem) => id !== workflowItem._id
-        );
-
-        setWorkflowItems(newWorkflowItems);
-
-        setShowModal(true);
-        setModalContent("Workflow deleted successfully. 😮");
+      await fetch("http://localhost:4500/api/workflow/delete", {
+        method: "Delete",
+        headers: {
+          Authorization: `Bearer ${AuthContextValue.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
       });
-    }
+
+      let newWorkflowItems = [...workflowItems];
+      newWorkflowItems = newWorkflowItems.filter(
+        (workflowItem) => id !== workflowItem._id
+      );
+
+      setWorkflowItems(newWorkflowItems);
+      if (filter !== "all") {
+        let filteredWorkflowItems = newWorkflowItems.filter(
+          (workflow) => workflow.workflow_status === filter
+        );
+        setWorkflowItemsToBeShown(filteredWorkflowItems);
+      } else {
+        setWorkflowItemsToBeShown(newWorkflowItems);
+      }
+
+      setShowModal(true);
+      setModalContent("Workflow deleted successfully. 😮");
+    });
   };
 
   const workflowCreateHandler = async () => {
@@ -106,6 +109,7 @@ const Workflow = (props) => {
       let newWorkflowItems = [...workflowItems];
       newWorkflowItems.push(result.workflow);
       setWorkflowItems(newWorkflowItems);
+      if (filter === "all") setWorkflowItemsToBeShown(newWorkflowItems);
     }
   };
 
@@ -123,19 +127,19 @@ const Workflow = (props) => {
     }
   };
 
-  const workflowItmeNameChangeHandler = (event, index) => {
-    let updatedWorkflowItems = [...workflowItems];
-    updatedWorkflowItems[index].name = event.target.value;
-    setWorkflowItems(updatedWorkflowItems);
-  };
+  // const workflowItmeNameChangeHandler = (event, index) => {
+  //   let updatedWorkflowItems = [...workflowItemsToBeShown];
+  //   updatedWorkflowItems[index].name = event.target.value;
+  //   setWorkflowItems(updatedWorkflowItems);
+  // };
 
   return (
     <WorkflowStyles>
       <div className="operations__container">
         <div>
           <SearchBar />
-          <Filter 
-            onFilterItemClickHandler={onFilterItemClickHandler} 
+          <Filter
+            onFilterItemClickHandler={onFilterItemClickHandler}
             currentFilter={filter}
           />
         </div>
@@ -160,7 +164,7 @@ const Workflow = (props) => {
             workflowItemTitle={workflow_item.name}
             workflowItemStatus={workflow_item.workflow_status}
             workflowItemDeleteHandler={workflowDeleteHandler}
-            workflowItmeNameChangeHandler={workflowItmeNameChangeHandler}
+            // workflowItmeNameChangeHandler={workflowItmeNameChangeHandler}
           />
         ))}
       </div>

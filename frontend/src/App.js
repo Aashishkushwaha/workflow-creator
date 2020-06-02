@@ -22,20 +22,18 @@ import SideDrawer from "./components/UI/SideDrawer/SideDrawer";
 import GlobalStyles from "./GlobalStyles";
 
 const light = {
-  // bgColor: "#ed9e55",
-  // bgColor: "#5CDB95",
-  // bgColor: "#34d496",
-  bgColor: "#08c6b4",
-  color: "#000",
+  bgColor: "#fff",
+  color: "#4c4c4c",
   border: "1px",
-  // borderColor: "#ed9e55",
-  // borderColor: "#5CDB95",
-  // borderColor: "#34d496",
+  navBgColor: "#f1f1f1",
   borderColor: "#08c6b4",
 };
 
 const dark = {
-  bgColor: "#414141",
+  // bgColor: "#414141",
+  // navBgColor: "#212121",
+  bgColor: "#282828",
+  navBgColor: "#414141",
   color: "#fff",
   border: "1px ",
   borderColor: "#111",

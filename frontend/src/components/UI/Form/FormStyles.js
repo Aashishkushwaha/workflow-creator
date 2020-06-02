@@ -4,7 +4,7 @@ const FormStyles = styled.form`
     max-width: 90%;
     width: 30rem;
     margin: 0 auto;
-    border: 1px solid ${props => props.theme.bgColor};
+    border: 1px solid ${props => props.theme.color};
     padding: 1rem;
     position: absolute;
     background: ${props => props.theme.bgColor};
