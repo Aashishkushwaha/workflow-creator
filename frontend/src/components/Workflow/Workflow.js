@@ -10,11 +10,11 @@ import ModalContext from "../../context/ModalContext";
 const Workflow = (props) => {
   const [workflowItems, setWorkflowItems] = useState([]);
   const [workflowItemsToBeShown, setWorkflowItemsToBeShown] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const AuthContextValue = useContext(AuthContext);
   const [filter, setFilter] = useState(
     localStorage.getItem("workflow_filter") || "all"
   );
-  const [searchTerm, setSearchTearm] = useState("");
-  const AuthContextValue = useContext(AuthContext);
   const {
     setShowModal,
     setModalContent,
@@ -30,7 +30,9 @@ const Workflow = (props) => {
         Authorization: `Bearer ${AuthContextValue.token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user: AuthContextValue.userId || localStorage.getItem("user-id")}),
+      body: JSON.stringify({
+        user: AuthContextValue.userId || localStorage.getItem("user-id"),
+      }),
     });
 
     let result = await res.json();
@@ -53,10 +55,6 @@ const Workflow = (props) => {
   }, []);
 
   const workflowDeleteHandler = async (id) => {
-    let workflowItem = workflowItems.filter(
-      (workflowItem) => id === workflowItem._id
-    );
-
     setConfirmModalContent("Do you really want to delete the workflow ?");
     setShowConfirmModal(true);
     setOnConfirmHandler(() => async () => {
@@ -116,6 +114,7 @@ const Workflow = (props) => {
   const onFilterItemClickHandler = (event, filter) => {
     localStorage.setItem("workflow_filter", filter);
     setFilter(filter);
+    setSearchTerm("");
 
     if (filter === "all") {
       setWorkflowItemsToBeShown(workflowItems);
@@ -127,11 +126,43 @@ const Workflow = (props) => {
     }
   };
 
+  useEffect(() => {
+    if (!searchTerm) {
+      if (filter === "all") {
+        setWorkflowItemsToBeShown(workflowItems);
+      } else {
+        setWorkflowItemsToBeShown(
+          workflowItems.filter(
+            (workflowItem) => workflowItem.workflow_status === filter
+          )
+        );
+      }
+    } else {
+      let workflowItemsCopy = [...workflowItems];
+      if (filter === "all") {
+        setWorkflowItemsToBeShown(
+          workflowItemsCopy.filter((workflowItem) =>
+            workflowItem.name.includes(searchTerm)
+          )
+        );
+      } else {
+        setWorkflowItemsToBeShown(
+          workflowItemsCopy.filter((workflowItem) => {
+            return (
+              workflowItem.name.includes(searchTerm) &&
+              workflowItem.workflow_status === filter
+            );
+          })
+        );
+      }
+    }
+  }, [searchTerm]);
+
   return (
     <WorkflowStyles>
       <div className="operations__container">
         <div>
-          <SearchBar />
+          <SearchBar setSearchTerm={setSearchTerm} value={searchTerm} />
           <Filter
             onFilterItemClickHandler={onFilterItemClickHandler}
             currentFilter={filter}

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import SerachBarStyles from "./SearchBarStyles";
 
-const SearchBar = (props) => {
-  const [searchText, setSearchText] = useState("");
-
+const SearchBar = ({ value, setSearchTerm, callback }) => {
   return (
     <SerachBarStyles>
       <input
         type="text"
-        value={searchText}
+        value={value}
         placeholder="Search ..."
-        onChange={(e) => setSearchText(e.target.value)}
+        onChange={(e) => {
+          setSearchTerm(e.target.value);
+        }}
       />
     </SerachBarStyles>
   );

@@ -47,8 +47,6 @@ const NodeItem = ({
         className="input"
         name="title"
         value={node.title}
-        minLength="3"
-        required
         placeholder="Note Title..."
         onChange={(e) => onNodeChangeHandler(e, index)}
       />
