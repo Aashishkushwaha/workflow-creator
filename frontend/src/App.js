@@ -54,6 +54,7 @@ function App() {
     setUserId(data.userId);
     setToken(data.token);
     localStorage.setItem("auth-token", data.token);
+    localStorage.setItem("user-id", data.userId);
   };
 
   const logout = () => {
@@ -61,6 +62,7 @@ function App() {
     setUserId(null);
     localStorage.removeItem("auth-token");
     localStorage.removeItem("workflow_filter")
+    localStorage.removeItem("user-id");
   };
 
   return (

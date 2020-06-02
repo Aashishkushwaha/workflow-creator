@@ -51,7 +51,7 @@ export default styled.div`
     grid-template-columns: repeat( auto-fill, minmax(18rem, 1fr) );
     justify-content: center;
     align-items: center;
-    gap: 3rem;
+    gap: 0rem 3rem;
   
     & > div:first-child > .node__connector {
       display: none;  

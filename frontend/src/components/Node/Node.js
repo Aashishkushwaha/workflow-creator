@@ -121,7 +121,7 @@ const Node = (props) => {
       })
 
       let requestBody = {
-        workflowId: nodeItems[0].workflowId,
+        workflowId: props.match.params.id,
         workflowItemTitle,
         nodeItems,
         workflowStatus

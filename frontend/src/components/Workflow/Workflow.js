@@ -30,7 +30,7 @@ const Workflow = (props) => {
         Authorization: `Bearer ${AuthContextValue.token}`,
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({ user: AuthContextValue.userId }),
+      body: JSON.stringify({ user: AuthContextValue.userId || localStorage.getItem("user-id")}),
     });
 
     let result = await res.json();
@@ -126,12 +126,6 @@ const Workflow = (props) => {
       setWorkflowItemsToBeShown(newWorkflowItems);
     }
   };
-
-  // const workflowItmeNameChangeHandler = (event, index) => {
-  //   let updatedWorkflowItems = [...workflowItemsToBeShown];
-  //   updatedWorkflowItems[index].name = event.target.value;
-  //   setWorkflowItems(updatedWorkflowItems);
-  // };
 
   return (
     <WorkflowStyles>
