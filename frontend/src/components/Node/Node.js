@@ -11,11 +11,12 @@ import AuthContext from "../../context/AuthContext";
 import ModalContext from "../../context/ModalContext";
 
 const Node = (props) => {
+
   const [workflowItemTitle, setWorkflowItemTitle] = useState(
     props.location.state.workflowItemTitle
   );
+  const [canShuffle, setCanShuffle] = useState(props.location.state.workflow_status === "completed");
   const [nodeItems, setNodeItems] = useState([]);
-  const [canShuffle, setCanShuffle] = useState(true);
   const { token } = useContext(AuthContext);
   const {
     setShowModal,
@@ -118,12 +119,15 @@ const Node = (props) => {
         }
         return null;
       })
+
       let requestBody = {
         workflowId: nodeItems[0].workflowId,
         workflowItemTitle,
         nodeItems,
         workflowStatus
       };
+
+      setCanShuffle(workflowStatus === "completed");
 
       let result = await fetch("http://localhost:4500/api/node/update", {
         method: "PUT",
@@ -177,9 +181,10 @@ const Node = (props) => {
             border="2px solid red"
             onClick={onShuffleConfirmHandler}
             style={{
-              background: canShuffle ? "grey" : "dodgreblue",
+              background: canShuffle ? "dodgerblue" : "#bbb",
+              cursor: canShuffle ? "pointer" : "not-allowed"
             }}
-            disabled={canShuffle}
+            disabled={!canShuffle}
           >
             <div style={{ display: "flex", alignItems: "center" }}>
               <img

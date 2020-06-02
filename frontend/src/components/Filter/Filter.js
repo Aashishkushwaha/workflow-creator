@@ -1,19 +1,48 @@
-import React from 'react';
-import FilterStyles from './FilterStyles';
+import React from "react";
+import FilterStyles from "./FilterStyles";
 
-const Filter = ({onFilterItemClickHandler}) => {
+const Filter = ({ onFilterItemClickHandler, currentFilter }) => {
   return (
     <FilterStyles>
-      <div >
+      <div>
         Filter
-        <ul>
-          <li onClick={(event) => onFilterItemClickHandler(event, "all")}>All</li>
-          <li onClick={(event) => onFilterItemClickHandler(event, "completed")}>Completed</li>
-          <li onClick={(event) => onFilterItemClickHandler(event, "pending")}>Pending</li>
+        <span
+          className={"filter__indicator"}
+          style={{
+            opacity: currentFilter !== "all" ? 1 : 0,
+            transition: "opacity .4s",
+          }}
+        />
+        <ul style={{ width: "100%" }}>
+          <li onClick={(event) => onFilterItemClickHandler(event, "all")}>
+            All
+          </li>
+          <li onClick={(event) => onFilterItemClickHandler(event, "completed")}>
+            Completed
+            <span
+              className={"filter__indicator"}
+              style={{
+                background: "#fff",
+                opacity: currentFilter === "completed" ? 1 : 0,
+                transition: "opacity .4s",
+              }}
+            />
+          </li>
+          <li onClick={(event) => onFilterItemClickHandler(event, "pending")}>
+            Pending
+            <span
+              className={"filter__indicator"}
+              style={{
+                background: "#fff",
+                opacity: currentFilter === "pending" ? 1 : 0,
+                transition: "opacity .4s",
+              }}
+            />
+          </li>
         </ul>
       </div>
     </FilterStyles>
-  )
-}
+  );
+};
 
 export default Filter;

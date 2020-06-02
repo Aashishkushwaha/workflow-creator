@@ -8,7 +8,8 @@ const withLink = (WrappedComponent) => {
         <NavLink to={{
           pathname: `/workflow/${this.props.to}`,
           state: {
-            workflowItemTitle: this.props.workflowItemTitle
+            workflowItemTitle: this.props.workflowItemTitle,
+            workflow_status: this.props.workflow_status
           }
         }}>
           <WrappedComponent />

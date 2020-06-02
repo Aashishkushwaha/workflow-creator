@@ -17,7 +17,7 @@ const EditWorkFlowItem = (props) => {
 const EditWorkFlowItemWithLink = withLink(EditWorkFlowItem);
 
 class WorkflowItem extends React.Component {
-  state = {}
+  state = {};
 
   static getDerivedStateFromProps(props, state) {
     return {
@@ -39,6 +39,7 @@ class WorkflowItem extends React.Component {
           to={this.props.id}
           className="actions__button--left"
           workflowItemTitle={this.state.workflowItemTitle}
+          workflow_status={this.props.workflowItemStatus}
         />
         <span
           title="delete"
@@ -47,7 +48,11 @@ class WorkflowItem extends React.Component {
         >
           <img style={{ height: "1rem" }} src={trash} alt="delete" />
         </span>
-        <span className="input">{this.state.workflowItemTitle}</span>
+        <input
+          value={this.state.workflowItemTitle}
+          onChange={(event) => this.props.workflowItmeNameChangeHandler(event, this.props.index)}
+          className="input"
+        />
         <div>
           <span>{this.state.workflowItemStatus}</span>
           <span></span>

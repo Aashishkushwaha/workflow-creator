@@ -51,6 +51,7 @@ const WorkflowItemStyles = styled.div`
     padding: .3rem;
     width: 100%;
     font: inherit;
+    border-radius: .3rem;
     border: 1px solid ${({theme}) => theme.bgColor};
     white-space: nowrap;
     overflow: hidden;

@@ -9,8 +9,11 @@ import ModalContext from "../../context/ModalContext";
 
 const Workflow = (props) => {
   const [workflowItems, setWorkflowItems] = useState([]);
+  const [workflowItemsToBeShown, setWorkflowItemsToBeShown] = useState([]);
+  const [filter, setFilter] = useState(
+    localStorage.getItem("workflow_filter") || "all"
+  );
   // const [itemsToBeShown, setItemsToBeShown] = useState([]);
-  // const [filter, setFilter] = useState("all");
   const AuthContextValue = useContext(AuthContext);
   const {
     setShowModal,
@@ -34,6 +37,14 @@ const Workflow = (props) => {
 
     if (result.message) {
       setWorkflowItems(result.workflows);
+      if (filter === "all") {
+        setWorkflowItemsToBeShown(result.workflows);
+      } else {
+        let newWorkflowItems = result.workflows.filter(
+          (workflowItem) => workflowItem.workflow_status === filter
+        );
+        setWorkflowItemsToBeShown(newWorkflowItems);
+      }
     }
   };
 
@@ -99,7 +110,23 @@ const Workflow = (props) => {
   };
 
   const onFilterItemClickHandler = (event, filter) => {
-    alert(filter);
+    localStorage.setItem("workflow_filter", filter);
+    setFilter(filter);
+
+    if (filter === "all") {
+      setWorkflowItemsToBeShown(workflowItems);
+    } else {
+      let newWorkflowItems = workflowItems.filter(
+        (workflowItem) => workflowItem.workflow_status === filter
+      );
+      setWorkflowItemsToBeShown(newWorkflowItems);
+    }
+  };
+
+  const workflowItmeNameChangeHandler = (event, index) => {
+    let updatedWorkflowItems = [...workflowItems];
+    updatedWorkflowItems[index].name = event.target.value;
+    setWorkflowItems(updatedWorkflowItems);
   };
 
   return (
@@ -107,7 +134,10 @@ const Workflow = (props) => {
       <div className="operations__container">
         <div>
           <SearchBar />
-          <Filter onFilterItemClickHandler={onFilterItemClickHandler} />
+          <Filter 
+            onFilterItemClickHandler={onFilterItemClickHandler} 
+            currentFilter={filter}
+          />
         </div>
         <div className="controllers">
           <Button
@@ -122,13 +152,15 @@ const Workflow = (props) => {
         </div>
       </div>
       <div className="workflow__container">
-        {workflowItems.map((workflow_item) => (
+        {workflowItemsToBeShown.map((workflow_item, index) => (
           <WorkflowItem
             key={workflow_item._id}
             id={workflow_item._id}
+            index={index}
             workflowItemTitle={workflow_item.name}
             workflowItemStatus={workflow_item.workflow_status}
             workflowItemDeleteHandler={workflowDeleteHandler}
+            workflowItmeNameChangeHandler={workflowItmeNameChangeHandler}
           />
         ))}
       </div>

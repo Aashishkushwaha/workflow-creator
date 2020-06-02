@@ -49,8 +49,7 @@ export default styled.div`
     padding: 0.3rem;
     width: 100%;
     font-size: 1rem;
-    border: none;
-    border-bottom: 1px solid ${({ theme }) => theme.bgColor};
+    border: 1px solid ${({ theme }) => theme.bgColor};
     border-radius: .3rem;
     padding: .7rem .4rem  .3rem .7rem;
 

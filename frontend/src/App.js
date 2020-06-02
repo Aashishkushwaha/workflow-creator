@@ -62,6 +62,7 @@ function App() {
     setToken(null);
     setUserId(null);
     localStorage.removeItem("auth-token");
+    localStorage.removeItem("workflow_filter")
   };
 
   return (
