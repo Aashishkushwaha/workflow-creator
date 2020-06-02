@@ -28,7 +28,7 @@ const Node = (props) => {
 
   const fetchNodeItems = async () => {
     let result = await fetch(
-      `http://localhost:4500/api/node/read/${props.match.params.id}`,
+      `https://workflow-illustration.herokuapp.com/api/node/read/${props.match.params.id}`,
       {
         method: "GET",
         headers: {
@@ -51,7 +51,7 @@ const Node = (props) => {
       workflowId: props.match.params.id,
     };
 
-    let result = await fetch("http://localhost:4500/api/node/create", {
+    let result = await fetch("https://workflow-illustration.herokuapp.com/api/node/create", {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -76,7 +76,7 @@ const Node = (props) => {
       setOnConfirmHandler(() => async () => {
         let requestBody = { nodeId: nodeItems[nodeItems.length - 1]._id };
 
-        let result = await fetch("http://localhost:4500/api/node/delete", {
+        let result = await fetch("https://workflow-illustration.herokuapp.com/api/node/delete", {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -129,7 +129,7 @@ const Node = (props) => {
 
       setCanShuffle(workflowStatus === "completed");
 
-      let result = await fetch("http://localhost:4500/api/node/update", {
+      let result = await fetch("https://workflow-illustration.herokuapp.com/api/node/update", {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,

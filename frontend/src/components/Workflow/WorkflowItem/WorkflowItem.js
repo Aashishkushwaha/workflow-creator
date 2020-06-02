@@ -49,11 +49,6 @@ class WorkflowItem extends React.Component {
           <img style={{ height: "1rem" }} src={trash} alt="delete" />
         </span>
         <span className="input">{this.state.workflowItemTitle}</span>
-        {/* <input
-          value={this.state.workflowItemTitle}
-          onChange={(event) => this.props.workflowItmeNameChangeHandler(event, this.props.index)}
-          className="input"
-        /> */}
         <div>
           <span>{this.state.workflowItemStatus}</span>
           <span></span>

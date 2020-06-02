@@ -8,7 +8,7 @@ const RegisterPage = (props) => {
   const onSubmitHandler = async (formData) => {
     try {
 
-      let response = await fetch("http://localhost:4500/api/users/register", {
+      let response = await fetch("https://workflow-illustration.herokuapp.com/api/users/register", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"

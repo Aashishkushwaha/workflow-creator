@@ -24,7 +24,7 @@ const Workflow = (props) => {
   } = useContext(ModalContext);
 
   const fetchWorkflows = async () => {
-    let res = await fetch(`http://localhost:4500/api/workflow/read`, {
+    let res = await fetch(`https://workflow-illustration.herokuapp.com/api/workflow/read`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${AuthContextValue.token}`,
@@ -62,7 +62,7 @@ const Workflow = (props) => {
         workflowId: id,
       };
 
-      await fetch("http://localhost:4500/api/workflow/delete", {
+      await fetch("https://workflow-illustration.herokuapp.com/api/workflow/delete", {
         method: "Delete",
         headers: {
           Authorization: `Bearer ${AuthContextValue.token}`,
@@ -92,7 +92,7 @@ const Workflow = (props) => {
   };
 
   const workflowCreateHandler = async () => {
-    let res = await fetch(`http://localhost:4500/api/workflow/create`, {
+    let res = await fetch(`https://workflow-illustration.herokuapp.com/api/workflow/create`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${AuthContextValue.token}`,

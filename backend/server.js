@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
+const { MONGO_USER, MONGO_PASSWORD } = require("./config/keys");
 const PORT = process.env.PORT || 4500;
 
 app.use(express.json());
@@ -11,10 +12,13 @@ app.use("/api/node/", require("./routes/Node"));
 const db = mongoose.connection;
 
 mongoose
-  .connect("mongodb://localhost:27017/workflow-tophire", {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  })
+  .connect(
+    `mongodb+srv://${MONGO_USER}:${MONGO_PASSWORD}@myclusture-yrmmj.mongodb.net/test?retryWrites=true&w=majority`,
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
   .then(() => {
     app.listen(PORT, () => {
       console.log(`Server is running on port ${PORT}\nConnected to DB...`);
