@@ -9,13 +9,15 @@ import create from "../../assets/images/create.svg";
 import { withRouter } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ModalContext from "../../context/ModalContext";
+import { BASE_URL } from "../../Api";
 
 const Node = (props) => {
-
   const [workflowItemTitle, setWorkflowItemTitle] = useState(
     props.location.state.workflowItemTitle
   );
-  const [canShuffle, setCanShuffle] = useState(props.location.state.workflow_status === "completed");
+  const [canShuffle, setCanShuffle] = useState(
+    props.location.state.workflow_status === "completed"
+  );
   const [nodeItems, setNodeItems] = useState([]);
   const { token } = useContext(AuthContext);
   const {
@@ -28,7 +30,7 @@ const Node = (props) => {
 
   const fetchNodeItems = async () => {
     let result = await fetch(
-      `https://workflow-illustration.herokuapp.com/api/node/read/${props.match.params.id}`,
+      `${BASE_URL}/api/node/read/${props.match.params.id}`,
       {
         method: "GET",
         headers: {
@@ -51,7 +53,7 @@ const Node = (props) => {
       workflowId: props.match.params.id,
     };
 
-    let result = await fetch("https://workflow-illustration.herokuapp.com/api/node/create", {
+    let result = await fetch(`${BASE_URL}/api/node/create`, {
       method: "POST",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -76,7 +78,7 @@ const Node = (props) => {
       setOnConfirmHandler(() => async () => {
         let requestBody = { nodeId: nodeItems[nodeItems.length - 1]._id };
 
-        let result = await fetch("https://workflow-illustration.herokuapp.com/api/node/delete", {
+        let result = await fetch(`${BASE_URL}/api/node/delete`, {
           method: "DELETE",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -109,27 +111,26 @@ const Node = (props) => {
     setConfirmModalContent("Do you really want to save the changes ?");
     setShowConfirmModal(true);
     setOnConfirmHandler(() => async () => {
-
       let workflowStatus = "completed";
-      
-      nodeItems.map(nodeItem => {
-        if(nodeItem.node_status !== "completed"){
+
+      nodeItems.map((nodeItem) => {
+        if (nodeItem.node_status !== "completed") {
           workflowStatus = "pending";
           return null;
         }
         return null;
-      })
+      });
 
       let requestBody = {
         workflowId: props.match.params.id,
         workflowItemTitle,
         nodeItems,
-        workflowStatus
+        workflowStatus,
       };
 
       setCanShuffle(workflowStatus === "completed");
 
-      let result = await fetch("https://workflow-illustration.herokuapp.com/api/node/update", {
+      let result = await fetch(`${BASE_URL}/api/node/update`, {
         method: "PUT",
         headers: {
           Authorization: `Bearer ${token}`,
@@ -182,7 +183,7 @@ const Node = (props) => {
             onClick={onShuffleConfirmHandler}
             style={{
               background: canShuffle ? "dodgerblue" : "#bbb",
-              cursor: canShuffle ? "pointer" : "not-allowed"
+              cursor: canShuffle ? "pointer" : "not-allowed",
             }}
             disabled={!canShuffle}
           >

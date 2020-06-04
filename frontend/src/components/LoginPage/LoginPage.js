@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import Form from "../UI/Form/Form";
 import ModalContext from "../../context/ModalContext";
 import AuthContext from "../../context/AuthContext";
+import { BASE_URL } from "../../Api";
 
 const LoginPage = (props) => {
   let ModalContextValue = useContext(ModalContext);
@@ -9,7 +10,7 @@ const LoginPage = (props) => {
 
   const onSubmitHandler = async (formData) => {
     try {
-      let response = await fetch("https://workflow-illustration.herokuapp.com/api/users/login", {
+      let response = await fetch(`${BASE_URL}/api/users/login`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

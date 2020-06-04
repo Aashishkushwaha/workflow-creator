@@ -6,6 +6,7 @@ import WorkflowItem from "./WorkflowItem/WorkflowItem";
 import WorkflowStyles from "./WorkflowStyles";
 import AuthContext from "../../context/AuthContext";
 import ModalContext from "../../context/ModalContext";
+import { BASE_URL } from "../../Api";
 
 const Workflow = (props) => {
   const [workflowItems, setWorkflowItems] = useState([]);
@@ -24,16 +25,19 @@ const Workflow = (props) => {
   } = useContext(ModalContext);
 
   const fetchWorkflows = async () => {
-    let res = await fetch(`https://workflow-illustration.herokuapp.com/api/workflow/read`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${AuthContextValue.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        user: AuthContextValue.userId || localStorage.getItem("user-id"),
-      }),
-    });
+    let res = await fetch(
+      `${BASE_URL}/api/workflow/read`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${AuthContextValue.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          user: AuthContextValue.userId || localStorage.getItem("user-id"),
+        }),
+      }
+    );
 
     let result = await res.json();
 
@@ -62,14 +66,17 @@ const Workflow = (props) => {
         workflowId: id,
       };
 
-      await fetch("https://workflow-illustration.herokuapp.com/api/workflow/delete", {
-        method: "Delete",
-        headers: {
-          Authorization: `Bearer ${AuthContextValue.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
+      await fetch(
+        "${BASE_URL}/api/workflow/delete",
+        {
+          method: "Delete",
+          headers: {
+            Authorization: `Bearer ${AuthContextValue.token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        }
+      );
 
       let newWorkflowItems = [...workflowItems];
       newWorkflowItems = newWorkflowItems.filter(
@@ -92,14 +99,17 @@ const Workflow = (props) => {
   };
 
   const workflowCreateHandler = async () => {
-    let res = await fetch(`https://workflow-illustration.herokuapp.com/api/workflow/create`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${AuthContextValue.token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ user: AuthContextValue.userId }),
-    });
+    let res = await fetch(
+      `${BASE_URL}/api/workflow/create`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${AuthContextValue.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ user: AuthContextValue.userId }),
+      }
+    );
 
     let result = await res.json();
 
