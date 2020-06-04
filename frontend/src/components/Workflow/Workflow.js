@@ -6,6 +6,7 @@ import WorkflowItem from "./WorkflowItem/WorkflowItem";
 import WorkflowStyles from "./WorkflowStyles";
 import AuthContext from "../../context/AuthContext";
 import ModalContext from "../../context/ModalContext";
+import LoaderContext from "../../context/LoaderContext";
 import { BASE_URL } from "../../Api";
 
 const Workflow = (props) => {
@@ -13,6 +14,7 @@ const Workflow = (props) => {
   const [workflowItemsToBeShown, setWorkflowItemsToBeShown] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const AuthContextValue = useContext(AuthContext);
+  const { setShowLoader } = useContext(LoaderContext);
   const [filter, setFilter] = useState(
     localStorage.getItem("workflow_filter") || "all"
   );
@@ -25,23 +27,22 @@ const Workflow = (props) => {
   } = useContext(ModalContext);
 
   const fetchWorkflows = async () => {
-    let res = await fetch(
-      `${BASE_URL}/api/workflow/read`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${AuthContextValue.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          user: AuthContextValue.userId || localStorage.getItem("user-id"),
-        }),
-      }
-    );
+    setShowLoader(true)
+    let res = await fetch(`${BASE_URL}/api/workflow/read`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${AuthContextValue.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        user: AuthContextValue.userId || localStorage.getItem("user-id"),
+      }),
+    });
 
     let result = await res.json();
 
     if (result.message) {
+      setShowLoader(false);
       setWorkflowItems(result.workflows);
       if (filter === "all") {
         setWorkflowItemsToBeShown(result.workflows);
@@ -62,21 +63,19 @@ const Workflow = (props) => {
     setConfirmModalContent("Do you really want to delete the workflow ?");
     setShowConfirmModal(true);
     setOnConfirmHandler(() => async () => {
+      setShowLoader(true)
       const requestBody = {
         workflowId: id,
       };
 
-      await fetch(
-        "${BASE_URL}/api/workflow/delete",
-        {
-          method: "Delete",
-          headers: {
-            Authorization: `Bearer ${AuthContextValue.token}`,
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify(requestBody),
-        }
-      );
+      await fetch(`${BASE_URL}/api/workflow/delete`, {
+        method: "Delete",
+        headers: {
+          Authorization: `Bearer ${AuthContextValue.token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
       let newWorkflowItems = [...workflowItems];
       newWorkflowItems = newWorkflowItems.filter(
@@ -93,26 +92,25 @@ const Workflow = (props) => {
         setWorkflowItemsToBeShown(newWorkflowItems);
       }
 
+      setShowLoader(false);
       setShowModal(true);
       setModalContent("Workflow deleted successfully. 😮");
     });
   };
 
   const workflowCreateHandler = async () => {
-    let res = await fetch(
-      `${BASE_URL}/api/workflow/create`,
-      {
-        method: "POST",
-        headers: {
-          Authorization: `Bearer ${AuthContextValue.token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ user: AuthContextValue.userId }),
-      }
-    );
+    setShowLoader(true);
+    let res = await fetch(`${BASE_URL}/api/workflow/create`, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${AuthContextValue.token}`,
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ user: AuthContextValue.userId }),
+    });
 
     let result = await res.json();
-
+    setShowLoader(false);
     if (result.message) {
       let newWorkflowItems = [...workflowItems];
       newWorkflowItems.push(result.workflow);

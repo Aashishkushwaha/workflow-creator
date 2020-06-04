@@ -13,8 +13,7 @@ const ModalStyles = styled.div`
     transform: translate(-50%, -50%);
     border-radius: 0.4rem;
     transition: all 0.4s;
-    // color: #414141;
-    z-index: 10;
+    z-index: 100;
     font-size: 1rem;
   }
 

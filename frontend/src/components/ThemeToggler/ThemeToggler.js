@@ -18,8 +18,10 @@ const ThemeToggler = (props) => {
               onClick={() => {
                 if (ThemeContext.currentTheme === "light") {
                   ThemeContext.changeTheme("dark");
+                  localStorage.setItem("current-theme", "dark");
                 } else {
                   ThemeContext.changeTheme("light");
+                  localStorage.setItem("current-theme", "light");
                 }
               }}
             >

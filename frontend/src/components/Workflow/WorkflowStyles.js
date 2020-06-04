@@ -5,7 +5,7 @@ export default styled.div`
     padding: 0.8rem 1.4rem;
     /* width: 95vw; */
     margin: 0 auto;
-    border-bottom: 1.5px solid #000;
+    border-bottom: 1.5px solid ${({ theme }) => theme.color};
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -35,11 +35,11 @@ export default styled.div`
 
   .workflow__container {
     display: grid;
-    padding: 1rem .5rem;
+    padding: 1rem 0.5rem;
     overflow-y: auto;
     overflow-x: hidden;
     max-height: calc(100vh - 10.3rem);
-    grid-template-columns: repeat( auto-fill, minmax(18rem, 1fr) );
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
     justify-content: center;
     align-items: center;
   }
@@ -52,7 +52,7 @@ export default styled.div`
     .controllers {
       flex-direction: column;
       width: 76%;
-      padding-right: .4rem;
+      padding-right: 0.4rem;
     }
 
     .operations__container > div:first-child {
@@ -73,5 +73,4 @@ export default styled.div`
       max-height: calc(100vh - 15rem);
     }
   }
-  
 `;

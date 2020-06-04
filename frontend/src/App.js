@@ -15,8 +15,10 @@ import { ThemeProvider } from "styled-components";
 import ThemeContext from "./context/ThemeContext";
 import AuthContext from "./context/AuthContext";
 import ModalContext from "./context/ModalContext";
+import LoaderContext from "./context/LoaderContext";
 import SideDrawerContext from "./context/SideDrawerContext";
 import Modal from "./components/UI/Modal/Modal";
+import Loader from "./components/UI/Loader/Loader";
 import ConfirmModal from "./components/UI/Modal/ConfirmModal/ConfirmModal";
 import SideDrawer from "./components/UI/SideDrawer/SideDrawer";
 import GlobalStyles from "./GlobalStyles";
@@ -30,8 +32,6 @@ const light = {
 };
 
 const dark = {
-  // bgColor: "#414141",
-  // navBgColor: "#212121",
   bgColor: "#282828",
   navBgColor: "#414141",
   color: "#fff",
@@ -40,9 +40,12 @@ const dark = {
 };
 
 function App() {
-  const [currentTheme, setCurrentTheme] = useState("light");
+  const [currentTheme, setCurrentTheme] = useState(
+    localStorage.getItem("current-theme") || "light"
+  );
   const [showSideDrawer, setShowSideDrawer] = useState(false);
   const [showModal, setShowModal] = useState(false);
+  const [showLoader, setShowLoader] = useState(false);
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [modalContent, setModalContent] = useState("");
   const [confirmModalContent, setConfirmModalContent] = useState("");
@@ -61,79 +64,85 @@ function App() {
     setToken(null);
     setUserId(null);
     localStorage.removeItem("auth-token");
-    localStorage.removeItem("workflow_filter")
+    localStorage.removeItem("workflow_filter");
     localStorage.removeItem("user-id");
+    localStorage.removeItem("current-theme");
   };
 
   return (
     <Router>
       <AuthContext.Provider value={{ userId, token, login, logout }}>
-        <ModalContext.Provider
-          value={{
-            showModal,
-            modalContent,
-            showConfirmModal,
-            confirmModalContent,
-            onConfirmHandler,
-            setConfirmModalContent,
-            setShowConfirmModal,
-            setShowModal,
-            setModalContent,
-            setOnConfirmHandler,
-          }}
-        >
-          <SideDrawerContext.Provider
-            value={{ showSideDrawer, setShowSideDrawer }}
+        <LoaderContext.Provider value={{ showLoader, setShowLoader }}>
+          <ModalContext.Provider
+            value={{
+              showModal,
+              modalContent,
+              showConfirmModal,
+              confirmModalContent,
+              onConfirmHandler,
+              setConfirmModalContent,
+              setShowConfirmModal,
+              setShowModal,
+              setModalContent,
+              setOnConfirmHandler,
+            }}
           >
-            <ThemeContext.Provider
-              value={{ currentTheme, changeTheme: setCurrentTheme }}
+            <SideDrawerContext.Provider
+              value={{ showSideDrawer, setShowSideDrawer }}
             >
-              <ThemeProvider theme={currentTheme === "light" ? light : dark}>
-                <ThemeToggler />
+              <ThemeContext.Provider
+                value={{ currentTheme, changeTheme: setCurrentTheme }}
+              >
+                <ThemeProvider theme={currentTheme === "light" ? light : dark}>
+                  <ThemeToggler />
+                  {showLoader && <Loader />}
+                  {/* {<Loader />} */}
+                  <GlobalStyles />
 
-                <GlobalStyles />
+                  <Modal value={showModal} onBackDropClick={setShowModal}>
+                    {modalContent}
+                  </Modal>
 
-                <Modal value={showModal} onBackDropClick={setShowModal}>
-                  {modalContent}
-                </Modal>
+                  <ConfirmModal
+                    value={showConfirmModal}
+                    onBackDropClick={setShowConfirmModal}
+                    onConfirmClickHandler={onConfirmHandler}
+                  >
+                    {confirmModalContent}
+                  </ConfirmModal>
 
-                <ConfirmModal
-                  value={showConfirmModal}
-                  onBackDropClick={setShowConfirmModal}
-                  onConfirmClickHandler={onConfirmHandler}
-                >
-                  {confirmModalContent}
-                </ConfirmModal>
+                  <SideDrawer
+                    value={showSideDrawer}
+                    onBackDropClick={setShowSideDrawer}
+                  />
 
-                <SideDrawer
-                  value={showSideDrawer}
-                  onBackDropClick={setShowSideDrawer}
-                />
-
-                <NavBar />
-                <Switch>
-                  {token && <Redirect from="/" to="/workflow" exact />}
-                  {token && <Redirect from="/login" to="/workflow" exact />}
-                  {token && <Redirect from="/register" to="/workflow" exact />}
-                  {token && (
-                    <Route path="/workflow" component={Workflow} exact />
-                  )}
-                  {token && (
-                    <Route path="/workflow/:id" component={Node} exact />
-                  )}
-                  {!token && <Redirect from="/workflow" to="/login" exact />}
-                  {!token && <Route path="/login" component={LoginPage} />}
-                  {!token && (
-                    <Route path="/register" render={() => <RegisterPage />} />
-                  )}
-                  <Route>
-                    <h3>Error 404: Page Not Found</h3>
-                  </Route>
-                </Switch>
-              </ThemeProvider>
-            </ThemeContext.Provider>
-          </SideDrawerContext.Provider>
-        </ModalContext.Provider>
+                  <NavBar />
+                  <Switch>
+                    {token && <Redirect from="/" to="/workflow" exact />}
+                    {token && <Redirect from="/login" to="/workflow" exact />}
+                    {token && (
+                      <Redirect from="/register" to="/workflow" exact />
+                    )}
+                    {token && (
+                      <Route path="/workflow" component={Workflow} exact />
+                    )}
+                    {token && (
+                      <Route path="/workflow/:id" component={Node} exact />
+                    )}
+                    {!token && <Redirect from="/workflow" to="/login" exact />}
+                    {!token && <Route path="/login" component={LoginPage} />}
+                    {!token && (
+                      <Route path="/register" render={() => <RegisterPage />} />
+                    )}
+                    <Route>
+                      <h3>Error 404: Page Not Found</h3>
+                    </Route>
+                  </Switch>
+                </ThemeProvider>
+              </ThemeContext.Provider>
+            </SideDrawerContext.Provider>
+          </ModalContext.Provider>
+        </LoaderContext.Provider>
       </AuthContext.Provider>
     </Router>
   );

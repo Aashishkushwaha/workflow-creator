@@ -5,7 +5,7 @@ export default styled.div`
     padding: 0.8rem 1.4rem;
     /* width: 95vw; */
     margin: 0 auto;
-    border-bottom: 1.5px solid #000;
+    border-bottom: 1.5px solid ${({theme}) => theme.color};
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -32,7 +32,7 @@ export default styled.div`
 
   .operations__container > div > input:focus {
     outline: none;
-    box-shadow: 0 2px 1px 0px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 1px 0px rgba(0, 0, 0, 0.2);
   }
 
   .controllers {
@@ -48,26 +48,30 @@ export default styled.div`
   .node__container {
     display: grid;
     margin: 1rem 1rem 1rem 3.5rem;
-    grid-template-columns: repeat( auto-fill, minmax(18rem, 1fr) );
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 1fr));
     justify-content: center;
     align-items: center;
-    gap: 0rem 3rem;
-  
+    gap: 3rem;
+
     & > div:first-child > .node__connector {
-      display: none;  
+      display: none;
     }
   }
 
   @media only screen and (max-width: 768px) {
+    .node__container {
+      margin: 0 3rem;
+    }
+
     .operations__container > div:first-child {
       width: 50%;
     }
-    
+
     .controllers {
       flex-direction: column;
 
       & > * {
-        margin: .1rem 0 !important;
+        margin: 0.1rem 0 !important;
         align-self: center;
         width: 100%;
         & > * {
@@ -77,9 +81,10 @@ export default styled.div`
     }
   }
 
-  @media only screen and (max-width: 710px) {
+  @media only screen and (max-width: 724px) {
     .node__container {
-      margin: 1rem 2.25rem 1rem 2.25rem;
+      margin-top: 1.5rem;
+      margin-bottom: 1.5rem;
     }
   }
 `;

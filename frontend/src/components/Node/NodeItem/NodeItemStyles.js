@@ -109,7 +109,7 @@ export default styled.div`
     color: #fff;
   }
 
-  @media only screen and (max-width: 710px) {
+  @media only screen and (max-width: 724px) {
     .node__connector {
       top: -3.65rem;
       left: 50%;

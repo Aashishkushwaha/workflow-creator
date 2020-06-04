@@ -9,6 +9,7 @@ import create from "../../assets/images/create.svg";
 import { withRouter } from "react-router-dom";
 import AuthContext from "../../context/AuthContext";
 import ModalContext from "../../context/ModalContext";
+import LoaderContext from "../../context/LoaderContext";
 import { BASE_URL } from "../../Api";
 
 const Node = (props) => {
@@ -27,8 +28,10 @@ const Node = (props) => {
     setShowConfirmModal,
     setOnConfirmHandler,
   } = useContext(ModalContext);
+  const { setShowLoader } = useContext(LoaderContext);
 
   const fetchNodeItems = async () => {
+    setShowLoader(true);
     let result = await fetch(
       `${BASE_URL}/api/node/read/${props.match.params.id}`,
       {
@@ -40,6 +43,7 @@ const Node = (props) => {
     );
 
     const resData = await result.json();
+    setShowLoader(false);
 
     setNodeItems(resData.data);
   };
@@ -49,6 +53,7 @@ const Node = (props) => {
   }, []);
 
   const onNodeCreateHandler = async () => {
+    setShowLoader(true);
     let requestBody = {
       workflowId: props.match.params.id,
     };
@@ -65,10 +70,11 @@ const Node = (props) => {
     let resData = await result.json();
     let newNodeItems = [...nodeItems];
     newNodeItems.push(resData.data);
-    setNodeItems(newNodeItems);
+    setShowLoader(false);
 
     setModalContent(resData.message);
     setShowModal(true);
+    setNodeItems(newNodeItems);
   };
 
   const onDeleteConfirmHandler = (e) => {
@@ -76,6 +82,7 @@ const Node = (props) => {
       setConfirmModalContent("Do you really want to delete note ?");
       setShowConfirmModal(true);
       setOnConfirmHandler(() => async () => {
+        setShowLoader(true);
         let requestBody = { nodeId: nodeItems[nodeItems.length - 1]._id };
 
         let result = await fetch(`${BASE_URL}/api/node/delete`, {
@@ -89,6 +96,7 @@ const Node = (props) => {
 
         let resData = await result.json();
 
+        setShowLoader(false);
         setNodeItems(nodeItems.slice(0, nodeItems.length - 1));
         setModalContent(resData.message);
         setShowModal(true);
@@ -111,6 +119,7 @@ const Node = (props) => {
     setConfirmModalContent("Do you really want to save the changes ?");
     setShowConfirmModal(true);
     setOnConfirmHandler(() => async () => {
+      setShowLoader(true);
       let workflowStatus = "completed";
 
       nodeItems.map((nodeItem) => {
@@ -141,6 +150,7 @@ const Node = (props) => {
 
       let resData = await result.json();
 
+      setShowLoader(false);
       setModalContent(resData.message);
       setShowModal(true);
     });
