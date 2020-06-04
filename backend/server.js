@@ -4,6 +4,22 @@ const app = express();
 const { MONGO_USER, MONGO_PASSWORD } = require("./config/keys");
 const PORT = process.env.PORT || 4500;
 
+// CORS -> Cross-Origin Resource Sharing
+// Handling CORS errors
+app.use((req, res, next) => {
+  // we pass * as second arg because we want to allow access to everyone
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header(
+    "Access-Control-Allow-Headers",
+    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
+  );
+  if (req.method === "OPTIONS") {
+    res.header("Access-Control-Allow-Methods", "PUT, POST, PATCH, DELETE, GET");
+    return res.status(200).json({});
+  }
+  next();
+});
+
 app.use(express.json());
 app.use("/api/users/", require("./routes/Users"));
 app.use("/api/workflow/", require("./routes/Workflow"));
