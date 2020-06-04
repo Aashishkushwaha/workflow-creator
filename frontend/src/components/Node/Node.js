@@ -31,21 +31,26 @@ const Node = (props) => {
   const { setShowLoader } = useContext(LoaderContext);
 
   const fetchNodeItems = async () => {
-    setShowLoader(true);
-    let result = await fetch(
-      `${BASE_URL}/api/node/read/${props.match.params.id}`,
-      {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    try {
+      setShowLoader(true);
+      let result = await fetch(
+        `${BASE_URL}/api/node/read/${props.match.params.id}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
-    const resData = await result.json();
-    setShowLoader(false);
+      const resData = await result.json();
+      setShowLoader(false);
 
-    setNodeItems(resData.data);
+      setNodeItems(resData.data);
+    } catch (error) {
+      setShowModal(false);
+      setShowLoader(false);
+    }
   };
 
   useEffect(() => {
@@ -53,28 +58,33 @@ const Node = (props) => {
   }, []);
 
   const onNodeCreateHandler = async () => {
-    setShowLoader(true);
-    let requestBody = {
-      workflowId: props.match.params.id,
-    };
+    try {
+      setShowLoader(true);
+      let requestBody = {
+        workflowId: props.match.params.id,
+      };
 
-    let result = await fetch(`${BASE_URL}/api/node/create`, {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${token}`,
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(requestBody),
-    });
+      let result = await fetch(`${BASE_URL}/api/node/create`, {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(requestBody),
+      });
 
-    let resData = await result.json();
-    let newNodeItems = [...nodeItems];
-    newNodeItems.push(resData.data);
-    setShowLoader(false);
+      let resData = await result.json();
+      let newNodeItems = [...nodeItems];
+      newNodeItems.push(resData.data);
+      setShowLoader(false);
 
-    setModalContent(resData.message);
-    setShowModal(true);
-    setNodeItems(newNodeItems);
+      setModalContent(resData.message);
+      setShowModal(true);
+      setNodeItems(newNodeItems);
+    } catch (error) {
+      setShowModal(false);
+      setShowLoader(false);
+    }
   };
 
   const onDeleteConfirmHandler = (e) => {
@@ -102,6 +112,7 @@ const Node = (props) => {
         setShowModal(true);
       });
     } catch (error) {
+      setShowLoader(false);
       setModalContent("Something bad happened. 😮");
       setShowModal(true);
     }
@@ -116,44 +127,48 @@ const Node = (props) => {
   };
 
   const onSaveConfirmHandler = (e) => {
-    setConfirmModalContent("Do you really want to save the changes ?");
-    setShowConfirmModal(true);
-    setOnConfirmHandler(() => async () => {
-      setShowLoader(true);
-      let workflowStatus = "completed";
+    try {
+      setConfirmModalContent("Do you really want to save the changes ?");
+      setShowConfirmModal(true);
+      setOnConfirmHandler(() => async () => {
+        setShowLoader(true);
+        let workflowStatus = "completed";
 
-      nodeItems.map((nodeItem) => {
-        if (nodeItem.node_status !== "completed") {
-          workflowStatus = "pending";
+        nodeItems.map((nodeItem) => {
+          if (nodeItem.node_status !== "completed") {
+            workflowStatus = "pending";
+            return null;
+          }
           return null;
-        }
-        return null;
+        });
+
+        let requestBody = {
+          workflowId: props.match.params.id,
+          workflowItemTitle,
+          nodeItems,
+          workflowStatus,
+        };
+
+        setCanShuffle(workflowStatus === "completed");
+
+        let result = await fetch(`${BASE_URL}/api/node/update`, {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify(requestBody),
+        });
+
+        let resData = await result.json();
+
+        setShowLoader(false);
+        setModalContent(resData.message);
+        setShowModal(true);
       });
-
-      let requestBody = {
-        workflowId: props.match.params.id,
-        workflowItemTitle,
-        nodeItems,
-        workflowStatus,
-      };
-
-      setCanShuffle(workflowStatus === "completed");
-
-      let result = await fetch(`${BASE_URL}/api/node/update`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(requestBody),
-      });
-
-      let resData = await result.json();
-
+    } catch (error) {
       setShowLoader(false);
-      setModalContent(resData.message);
-      setShowModal(true);
-    });
+    }
   };
 
   const nodeItemStatusChangeHandler = async (e, nodeIndex) => {

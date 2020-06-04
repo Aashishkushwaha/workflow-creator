@@ -24,6 +24,7 @@ const RegisterPage = (props) => {
       ModalContextValue.setModalContent(res.message || res.error);
       ModalContextValue.setShowModal(true);
     } catch (error) {
+      setShowLoader(false);
       console.log(error);
       ModalContextValue.setModalContent("Internal Error Occurred 😩");
       ModalContextValue.setShowModal(true);

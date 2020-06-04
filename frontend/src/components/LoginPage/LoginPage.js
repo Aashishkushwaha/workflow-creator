@@ -34,11 +34,13 @@ const LoginPage = (props) => {
         );
         ModalContextValue.setShowModal(true);
       } else {
+        setShowLoader(false);
         ModalContextValue.setModalContent(res.error);
         ModalContextValue.setShowModal(true);
       }
     } catch (error) {
       console.log(error);
+      setShowLoader(false);
       ModalContextValue.setModalContent("Internal Error Occurred 😩");
       ModalContextValue.setShowModal(true);
     }
