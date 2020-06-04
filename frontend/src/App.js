@@ -11,6 +11,7 @@ import LoginPage from "./components/LoginPage/LoginPage";
 import Workflow from "./components/Workflow/Workflow";
 import NavBar from "./components/NavBar.js/NavBar";
 import Node from "./components/Node/Node";
+import HomeInfo from "./components/HomeInfo/HomeInfo";
 import { ThemeProvider } from "styled-components";
 import ThemeContext from "./context/ThemeContext";
 import AuthContext from "./context/AuthContext";
@@ -22,6 +23,7 @@ import Loader from "./components/UI/Loader/Loader";
 import ConfirmModal from "./components/UI/Modal/ConfirmModal/ConfirmModal";
 import SideDrawer from "./components/UI/SideDrawer/SideDrawer";
 import GlobalStyles from "./GlobalStyles";
+import ErrorPage from "./components/ErrorPage/ErrorPage";
 
 const light = {
   bgColor: "#fff",
@@ -134,9 +136,8 @@ function App() {
                     {!token && (
                       <Route path="/register" render={() => <RegisterPage />} />
                     )}
-                    <Route>
-                      <h3>Error 404: Page Not Found</h3>
-                    </Route>
+                    <Route exact path="/" component={HomeInfo} />
+                    <Route path="*" component={ErrorPage} />
                   </Switch>
                 </ThemeProvider>
               </ThemeContext.Provider>
